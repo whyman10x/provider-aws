@@ -24,9 +24,9 @@ import (
 	cfsdkv2types "github.com/aws/aws-sdk-go-v2/service/cloudformation/types"
 	svcsdk "github.com/aws/aws-sdk-go/service/servicecatalog"
 	svcsdkapi "github.com/aws/aws-sdk-go/service/servicecatalog/servicecatalogiface"
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
-	"github.com/crossplane/crossplane-runtime/pkg/reconciler/managed"
-	"github.com/crossplane/crossplane-runtime/pkg/test"
+	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/managed"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/test"
 	"github.com/google/go-cmp/cmp"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 

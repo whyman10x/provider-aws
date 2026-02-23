@@ -20,17 +20,15 @@ import (
 	"context"
 
 	svcsdk "github.com/aws/aws-sdk-go/service/cloudfront"
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
-	"github.com/crossplane/crossplane-runtime/pkg/connection"
-	"github.com/crossplane/crossplane-runtime/pkg/controller"
-	"github.com/crossplane/crossplane-runtime/pkg/event"
-	"github.com/crossplane/crossplane-runtime/pkg/meta"
-	"github.com/crossplane/crossplane-runtime/pkg/reconciler/managed"
-	"github.com/crossplane/crossplane-runtime/pkg/resource"
+	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/controller"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/event"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/meta"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/managed"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 	ctrl "sigs.k8s.io/controller-runtime"
 
 	svcapitypes "github.com/crossplane-contrib/provider-aws/apis/cloudfront/v1alpha1"
-	"github.com/crossplane-contrib/provider-aws/apis/v1alpha1"
 	cloudfront "github.com/crossplane-contrib/provider-aws/pkg/controller/cloudfront/utils"
 	"github.com/crossplane-contrib/provider-aws/pkg/features"
 	"github.com/crossplane-contrib/provider-aws/pkg/utils/pointer"
@@ -40,35 +38,28 @@ import (
 // SetupResponseHeadersPolicy adds a controller that reconciles ResponseHeadersPolicy.
 func SetupResponseHeadersPolicy(mgr ctrl.Manager, o controller.Options) error {
 	name := managed.ControllerName(svcapitypes.ResponseHeadersPolicyGroupKind)
-
-	cps := []managed.ConnectionPublisher{managed.NewAPISecretPublisher(mgr.GetClient(), mgr.GetScheme())}
-	if o.Features.Enabled(features.EnableAlphaExternalSecretStores) {
-		cps = append(cps, connection.NewDetailsManager(mgr.GetClient(), v1alpha1.StoreConfigGroupVersionKind))
+	opts := []option{
+		func(e *external) {
+			e.preObserve = preObserve
+			e.postObserve = postObserve
+			e.preUpdate = preUpdate
+			e.postCreate = postCreate
+			e.preCreate = preCreate
+			e.lateInitialize = lateInitialize
+			e.isUpToDate = isUpToDate
+			d := &deleter{external: e}
+			e.preDelete = d.preDelete
+		},
 	}
 
 	reconcilerOpts := []managed.ReconcilerOption{
 		managed.WithCriticalAnnotationUpdater(custommanaged.NewRetryingCriticalAnnotationUpdater(mgr.GetClient())),
-		managed.WithTypedExternalConnector(&connector{
-			kube: mgr.GetClient(),
-			opts: []option{
-				func(e *external) {
-					e.preCreate = preCreate
-					e.postCreate = postCreate
-					e.lateInitialize = lateInitialize
-					e.preObserve = preObserve
-					e.postObserve = postObserve
-					e.isUpToDate = isUpToDate
-					e.preUpdate = preUpdate
-					e.postUpdate = postUpdate
-					d := &deleter{external: e}
-					e.preDelete = d.preDelete
-				},
-			},
-		}),
+		managed.WithTypedExternalConnector(&connector{kube: mgr.GetClient(), opts: opts}),
+		managed.WithInitializers(managed.NewNameAsExternalName(mgr.GetClient())),
+		managed.WithReferenceResolver(managed.NewAPISimpleReferenceResolver(mgr.GetClient())),
 		managed.WithPollInterval(o.PollInterval),
 		managed.WithLogger(o.Logger.WithValues("controller", name)),
 		managed.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name))),
-		managed.WithConnectionPublishers(cps...),
 	}
 
 	if o.Features.Enabled(features.EnableAlphaManagementPolicies) {

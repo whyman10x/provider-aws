@@ -1,8 +1,8 @@
 package v1alpha1
 
 import (
-	"github.com/crossplane/crossplane-runtime/pkg/reference"
-	"github.com/crossplane/crossplane-runtime/pkg/resource"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/reference"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 	"k8s.io/utils/ptr"
 
 	elbv2 "github.com/crossplane-contrib/provider-aws/apis/elbv2/v1alpha1"

@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	svcsdk "github.com/aws/aws-sdk-go/service/rds"
-	"github.com/crossplane/crossplane-runtime/pkg/test"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/test"
 	"github.com/google/go-cmp/cmp"
 	"k8s.io/utils/ptr"
 	"sigs.k8s.io/controller-runtime/pkg/client"

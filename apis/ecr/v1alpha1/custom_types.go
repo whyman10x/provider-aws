@@ -1,6 +1,6 @@
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 
 // CustomLifecyclePolicyParameters are custom reference parameters for the LifecyclePolicy
 type CustomLifecyclePolicyParameters struct {

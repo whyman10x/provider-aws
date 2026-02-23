@@ -25,7 +25,7 @@ import (
 	context "context"
 	reflect "reflect"
 
-	v1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+	common "github.com/crossplane/crossplane-runtime/v2/apis/common"
 	gomock "github.com/golang/mock/gomock"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -54,7 +54,7 @@ func (m *MockResolverService) EXPECT() *MockResolverServiceMockRecorder {
 }
 
 // GetProviderDetails mocks base method.
-func (m *MockResolverService) GetProviderDetails(arg0 context.Context, arg1 client.Client, arg2 *v1.SecretReference) (map[string]*string, error) {
+func (m *MockResolverService) GetProviderDetails(arg0 context.Context, arg1 client.Client, arg2 *common.SecretReference) (map[string]*string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetProviderDetails", arg0, arg1, arg2)
 	ret0, _ := ret[0].(map[string]*string)

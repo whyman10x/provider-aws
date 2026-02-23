@@ -6,8 +6,8 @@ import (
 	"strconv"
 
 	svcsdk "github.com/aws/aws-sdk-go/service/mq"
-	cperrors "github.com/crossplane/crossplane-runtime/pkg/errors"
-	"github.com/crossplane/crossplane-runtime/pkg/meta"
+	cperrors "github.com/crossplane/crossplane-runtime/v2/pkg/errors"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/meta"
 
 	svcapitypes "github.com/crossplane-contrib/provider-aws/apis/mq/v1alpha1"
 	"github.com/crossplane-contrib/provider-aws/pkg/utils/pointer"

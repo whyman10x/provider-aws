@@ -20,9 +20,10 @@ package manualv1alpha1
 
 import (
 	"context"
+
 	v1alpha1 "github.com/crossplane-contrib/provider-aws/apis/elbv2/v1alpha1"
 	v1beta1 "github.com/crossplane-contrib/provider-aws/apis/lambda/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )

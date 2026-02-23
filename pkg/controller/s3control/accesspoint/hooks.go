@@ -21,9 +21,9 @@ import (
 
 	svcsdk "github.com/aws/aws-sdk-go/service/s3control"
 	svcsdkapi "github.com/aws/aws-sdk-go/service/s3control/s3controliface"
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
-	"github.com/crossplane/crossplane-runtime/pkg/meta"
-	"github.com/crossplane/crossplane-runtime/pkg/reconciler/managed"
+	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/meta"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/managed"
 
 	svcapitypes "github.com/crossplane-contrib/provider-aws/apis/s3control/v1alpha1"
 	"github.com/crossplane-contrib/provider-aws/pkg/utils/pointer"

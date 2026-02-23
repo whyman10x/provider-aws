@@ -21,18 +21,16 @@ import (
 	"slices"
 
 	svcsdk "github.com/aws/aws-sdk-go/service/cloudfront"
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
-	"github.com/crossplane/crossplane-runtime/pkg/connection"
-	"github.com/crossplane/crossplane-runtime/pkg/controller"
-	"github.com/crossplane/crossplane-runtime/pkg/errors"
-	"github.com/crossplane/crossplane-runtime/pkg/event"
-	"github.com/crossplane/crossplane-runtime/pkg/meta"
-	"github.com/crossplane/crossplane-runtime/pkg/reconciler/managed"
-	"github.com/crossplane/crossplane-runtime/pkg/resource"
+	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/controller"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/event"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/meta"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/managed"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 	ctrl "sigs.k8s.io/controller-runtime"
 
 	svcapitypes "github.com/crossplane-contrib/provider-aws/apis/cloudfront/v1alpha1"
-	"github.com/crossplane-contrib/provider-aws/apis/v1alpha1"
 	cloudfront "github.com/crossplane-contrib/provider-aws/pkg/controller/cloudfront/utils"
 	"github.com/crossplane-contrib/provider-aws/pkg/features"
 	"github.com/crossplane-contrib/provider-aws/pkg/utils/pointer"
@@ -45,37 +43,30 @@ var (
 	OriginAccessControlSigningProtocol = []string{"sigv4"}
 )
 
+// SetupOriginAccessControl adds a controller that reconciles OriginAccessControl.
 func SetupOriginAccessControl(mgr ctrl.Manager, o controller.Options) error {
-	_ = custommanaged.NewRetryingCriticalAnnotationUpdater
-	name := managed.ControllerName(svcapitypes.OriginAccessControlKind)
-
-	cps := []managed.ConnectionPublisher{managed.NewAPISecretPublisher(mgr.GetClient(), mgr.GetScheme())}
-	if o.Features.Enabled(features.EnableAlphaExternalSecretStores) {
-		cps = append(cps, connection.NewDetailsManager(mgr.GetClient(), v1alpha1.StoreConfigGroupVersionKind))
+	name := managed.ControllerName(svcapitypes.OriginAccessControlGroupKind)
+	opts := []option{
+		func(e *external) {
+			e.preObserve = preObserve
+			e.postObserve = postObserve
+			e.preUpdate = preUpdate
+			e.preDelete = preDelete
+			e.postCreate = postCreate
+			e.preCreate = preCreate
+			e.lateInitialize = lateInitialize
+			e.isUpToDate = isUpToDate
+		},
 	}
 
 	reconcilerOpts := []managed.ReconcilerOption{
 		managed.WithCriticalAnnotationUpdater(custommanaged.NewRetryingCriticalAnnotationUpdater(mgr.GetClient())),
-		managed.WithTypedExternalConnector(&connector{
-			kube: mgr.GetClient(),
-			opts: []option{
-				func(e *external) {
-					e.preCreate = preCreate
-					e.postCreate = postCreate
-					e.preObserve = preObserve
-					e.postObserve = postObserve
-					e.isUpToDate = isUpToDate
-					e.preUpdate = preUpdate
-					e.lateInitialize = lateInitialize
-					e.postUpdate = postUpdate
-					e.preDelete = preDelete
-				},
-			},
-		}),
+		managed.WithTypedExternalConnector(&connector{kube: mgr.GetClient(), opts: opts}),
+		managed.WithInitializers(managed.NewNameAsExternalName(mgr.GetClient())),
+		managed.WithReferenceResolver(managed.NewAPISimpleReferenceResolver(mgr.GetClient())),
 		managed.WithPollInterval(o.PollInterval),
 		managed.WithLogger(o.Logger.WithValues("controller", name)),
 		managed.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name))),
-		managed.WithConnectionPublishers(cps...),
 	}
 
 	if o.Features.Enabled(features.EnableAlphaManagementPolicies) {

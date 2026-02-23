@@ -21,7 +21,7 @@ import (
 	"testing"
 
 	svcsdk "github.com/aws/aws-sdk-go/service/glue"
-	"github.com/crossplane/crossplane-runtime/pkg/meta"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/meta"
 	"github.com/google/go-cmp/cmp"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 

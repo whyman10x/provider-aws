@@ -18,7 +18,7 @@ import (
 	"github.com/crossplane/crossplane-runtime/pkg/meta"
 	"github.com/crossplane/crossplane-runtime/pkg/reconciler/managed"
 	cpresource "github.com/crossplane/crossplane-runtime/pkg/resource"
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 
 	svcapitypes "github.com/crossplane-contrib/provider-aws/apis/{{ .ServicePackageName }}/{{ .APIVersion}}"
 	connectaws "github.com/crossplane-contrib/provider-aws/pkg/utils/connect/aws"

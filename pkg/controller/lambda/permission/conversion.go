@@ -18,7 +18,7 @@ package permission
 
 import (
 	svcsdk "github.com/aws/aws-sdk-go-v2/service/lambda"
-	"github.com/crossplane/crossplane-runtime/pkg/meta"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/meta"
 
 	svcapitypes "github.com/crossplane-contrib/provider-aws/apis/lambda/manualv1alpha1"
 	"github.com/crossplane-contrib/provider-aws/pkg/utils/pointer"

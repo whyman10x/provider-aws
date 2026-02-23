@@ -23,20 +23,18 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	awsec2 "github.com/aws/aws-sdk-go-v2/service/ec2"
 	awsec2types "github.com/aws/aws-sdk-go-v2/service/ec2/types"
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
-	"github.com/crossplane/crossplane-runtime/pkg/connection"
-	"github.com/crossplane/crossplane-runtime/pkg/controller"
-	"github.com/crossplane/crossplane-runtime/pkg/event"
-	"github.com/crossplane/crossplane-runtime/pkg/meta"
-	"github.com/crossplane/crossplane-runtime/pkg/reconciler/managed"
-	"github.com/crossplane/crossplane-runtime/pkg/resource"
-	"github.com/google/go-cmp/cmp"
+	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/controller"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/event"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/meta"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/managed"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
+	cmp "github.com/google/go-cmp/cmp"
 	"github.com/pkg/errors"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 
 	"github.com/crossplane-contrib/provider-aws/apis/ec2/v1beta1"
-	"github.com/crossplane-contrib/provider-aws/apis/v1alpha1"
 	"github.com/crossplane-contrib/provider-aws/pkg/clients/ec2"
 	"github.com/crossplane-contrib/provider-aws/pkg/features"
 	connectaws "github.com/crossplane-contrib/provider-aws/pkg/utils/connect/aws"
@@ -45,9 +43,7 @@ import (
 )
 
 const (
-	errUnexpectedObject = "The managed resource is not an VPC resource"
-	errKubeUpdateFailed = "cannot update VPC custom resource"
-
+	errUnexpectedObject    = "The managed resource is not a VPC resource"
 	errDescribe            = "failed to describe VPC with id"
 	errMultipleItems       = "retrieved multiple VPCs for the given vpcId"
 	errCreate              = "failed to create the VPC resource"
@@ -62,22 +58,15 @@ const (
 func SetupVPC(mgr ctrl.Manager, o controller.Options) error {
 	name := managed.ControllerName(v1beta1.VPCGroupKind)
 
-	cps := []managed.ConnectionPublisher{managed.NewAPISecretPublisher(mgr.GetClient(), mgr.GetScheme())}
-	if o.Features.Enabled(features.EnableAlphaExternalSecretStores) {
-		cps = append(cps, connection.NewDetailsManager(mgr.GetClient(), v1alpha1.StoreConfigGroupVersionKind))
-	}
-
 	reconcilerOpts := []managed.ReconcilerOption{
 		managed.WithCriticalAnnotationUpdater(custommanaged.NewRetryingCriticalAnnotationUpdater(mgr.GetClient())),
 		managed.WithExternalConnecter(&connector{kube: mgr.GetClient(), newClientFn: ec2.NewVPCClient}),
 		managed.WithCreationGracePeriod(3 * time.Minute),
 		managed.WithReferenceResolver(managed.NewAPISimpleReferenceResolver(mgr.GetClient())),
-		managed.WithConnectionPublishers(),
 		managed.WithInitializers(),
 		managed.WithPollInterval(o.PollInterval),
 		managed.WithLogger(o.Logger.WithValues("controller", name)),
 		managed.WithRecorder(event.NewAPIRecorder(mgr.GetEventRecorderFor(name))),
-		managed.WithConnectionPublishers(cps...),
 	}
 
 	if o.Features.Enabled(features.EnableAlphaManagementPolicies) {
@@ -309,7 +298,7 @@ func (e *external) Delete(ctx context.Context, mgd resource.Managed) (managed.Ex
 		return managed.ExternalDelete{}, errors.New(errUnexpectedObject)
 	}
 
-	cr.Status.SetConditions(xpv1.Deleting())
+	cr.SetConditions(xpv1.Deleting())
 
 	_, err := e.client.DeleteVpc(ctx, &awsec2.DeleteVpcInput{
 		VpcId: aws.String(meta.GetExternalName(cr)),
@@ -318,7 +307,7 @@ func (e *external) Delete(ctx context.Context, mgd resource.Managed) (managed.Ex
 	return managed.ExternalDelete{}, errorutils.Wrap(resource.Ignore(ec2.IsVPCNotFoundErr, err), errDelete)
 }
 
-func (e *external) Disconnect(ctx context.Context) error {
+func (e *external) Disconnect(_ context.Context) error {
 	// Unimplemented, required by newer versions of crossplane-runtime
 	return nil
 }

@@ -23,11 +23,12 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	awsacmpca "github.com/aws/aws-sdk-go-v2/service/acmpca"
 	awsacmpcatypes "github.com/aws/aws-sdk-go-v2/service/acmpca/types"
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
-	"github.com/crossplane/crossplane-runtime/pkg/meta"
-	"github.com/crossplane/crossplane-runtime/pkg/reconciler/managed"
-	"github.com/crossplane/crossplane-runtime/pkg/resource"
-	"github.com/crossplane/crossplane-runtime/pkg/test"
+	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/meta"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/managed"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/test"
+	xperrors "github.com/crossplane/crossplane-runtime/v2/pkg/errors"
 	"github.com/google/go-cmp/cmp"
 	"github.com/pkg/errors"
 
@@ -130,7 +131,7 @@ func TestObserve(t *testing.T) {
 			},
 			want: want{
 				cr:  unexpectedItem,
-				err: errors.New(errUnexpectedObject),
+				err: xperrors.New(errUnexpectedObject),
 			},
 		},
 		"ClientError": {
@@ -211,7 +212,7 @@ func TestCreate(t *testing.T) {
 			},
 			want: want{
 				cr:  unexpectedItem,
-				err: errors.New(errUnexpectedObject),
+				err: xperrors.New(errUnexpectedObject),
 			},
 		},
 		"ClientError": {
@@ -289,7 +290,7 @@ func TestDelete(t *testing.T) {
 			},
 			want: want{
 				cr:  unexpectedItem,
-				err: errors.New(errUnexpectedObject),
+				err: xperrors.New(errUnexpectedObject),
 			},
 		},
 		"ClientError": {
