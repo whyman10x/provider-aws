@@ -145,7 +145,7 @@ ACK_GENERATE ?= $(ACK_GENERATE_DIR)/ack-generate_$(ACK_VERSION)
 $(ACK_GENERATE):
 	@$(INFO) Building ack-generate $(ACK_VERSION)
 	@mkdir -p "$(ACK_GENERATE_DIR)"
-	@$(GO) build -modfile "$(ROOT_DIR)/tools/go.mod" -o "$(ACK_GENERATE)" -tags codegen github.com/aws-controllers-k8s/code-generator/cmd/ack-generate || $(FAIL)
+	@go build -modfile "$(ROOT_DIR)/tools/go.mod" -o "$(ACK_GENERATE)" -tags codegen github.com/aws-controllers-k8s/code-generator/cmd/ack-generate || $(FAIL)
 	@$(OK) Built ack-generate $(ACK_VERSION)
 
 services: $(ACK_GENERATE) $(GOIMPORTS)
@@ -153,7 +153,7 @@ services: $(ACK_GENERATE) $(GOIMPORTS)
 		$(INFO) Generating $$svc controllers and CRDs; \
 		PATH="${PATH}:$(TOOLS_HOST_DIR)"; \
 		$(ACK_GENERATE) crossplane --aws-sdk-go-version $(AWS_SDK_GO_VERSION) $$svc --output=./ || exit 1; \
-		$(OK) Generating $$svc controllers and CRDs; \
+		$(OK) Generated $$svc controllers and CRDs; \
 	done
 
 services.all:

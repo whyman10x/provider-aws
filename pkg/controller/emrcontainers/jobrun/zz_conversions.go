@@ -148,7 +148,7 @@ func GenerateJobRun(resp *svcsdk.DescribeJobRunOutput) *svcapitypes.JobRun {
 		cr.Status.AtProvider.VirtualClusterID = nil
 	}
 
-	return cr
+return cr
 }
 
 // GenerateStartJobRunInput returns a create input.
@@ -226,6 +226,7 @@ func GenerateStartJobRunInput(cr *svcapitypes.JobRun) *svcsdk.StartJobRunInput {
 	return res
 }
 
+
 // GenerateCancelJobRunInput returns a deletion input.
 func GenerateCancelJobRunInput(cr *svcapitypes.JobRun) *svcsdk.CancelJobRunInput {
 	res := &svcsdk.CancelJobRunInput{}
@@ -240,5 +241,5 @@ func GenerateCancelJobRunInput(cr *svcapitypes.JobRun) *svcsdk.CancelJobRunInput
 // IsNotFound returns whether the given error is of type NotFound or not.
 func IsNotFound(err error) bool {
 	awsErr, ok := err.(awserr.Error)
-	return ok && awsErr.Code() == "ResourceNotFoundException"
+	return ok && awsErr.Code() == "ResourceNotFoundException" 
 }

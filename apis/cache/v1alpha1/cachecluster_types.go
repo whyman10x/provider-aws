@@ -187,7 +187,7 @@ type CacheClusterParameters struct {
 
 	// The password used to access a password protected server.
 	// +optional
-	AuthToken *string `json:"authToken,omitempty"`
+	AuthToken *string `json:"authToken,omitempty"` //nolint:gosec
 
 	// Specifies the strategy to use to update the AUTH token. This parameter must
 	// be specified with the auth-token parameter. Possible values:

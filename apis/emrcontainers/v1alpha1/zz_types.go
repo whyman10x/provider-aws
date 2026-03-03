@@ -27,13 +27,17 @@ var (
 	_ = &metav1.Time{}
 )
 
+
+
 // +kubebuilder:skipversion
 type CloudWatchMonitoringConfiguration struct {
+	
 	LogStreamNamePrefix *string `json:"logStreamNamePrefix,omitempty"`
 }
 
 // +kubebuilder:skipversion
 type Configuration struct {
+	
 	Classification *string `json:"classification,omitempty"`
 }
 
@@ -45,38 +49,41 @@ type ContainerInfo struct {
 
 // +kubebuilder:skipversion
 type ContainerProvider struct {
+	
 	ID *string `json:"id,omitempty"`
 	// The information about the container used for a job run or a managed endpoint.
 	Info *ContainerInfo `json:"info,omitempty"`
-
+	
 	Type *string `json:"type_,omitempty"`
 }
 
 // +kubebuilder:skipversion
 type EKSInfo struct {
+	
 	Namespace *string `json:"namespace,omitempty"`
 }
 
 // +kubebuilder:skipversion
 type Endpoint struct {
+	
 	CreatedAt *metav1.Time `json:"createdAt,omitempty"`
-
+	
 	ExecutionRoleARN *string `json:"executionRoleARN,omitempty"`
-
+	
 	FailureReason *string `json:"failureReason,omitempty"`
-
+	
 	ID *string `json:"id,omitempty"`
-
+	
 	Name *string `json:"name,omitempty"`
-
+	
 	ReleaseLabel *string `json:"releaseLabel,omitempty"`
-
+	
 	SecurityGroup *string `json:"securityGroup,omitempty"`
-
+	
 	StateDetails *string `json:"stateDetails,omitempty"`
-
+	
 	Tags map[string]*string `json:"tags,omitempty"`
-
+	
 	VirtualClusterID *string `json:"virtualClusterID,omitempty"`
 }
 
@@ -90,113 +97,122 @@ type JobDriver struct {
 
 // +kubebuilder:skipversion
 type JobRun_SDK struct {
+	
 	ARN *string `json:"arn,omitempty"`
-
+	
 	ClientToken *string `json:"clientToken,omitempty"`
-
+	
 	CreatedAt *metav1.Time `json:"createdAt,omitempty"`
-
+	
 	CreatedBy *string `json:"createdBy,omitempty"`
-
+	
 	ExecutionRoleARN *string `json:"executionRoleARN,omitempty"`
-
+	
 	FailureReason *string `json:"failureReason,omitempty"`
-
+	
 	FinishedAt *metav1.Time `json:"finishedAt,omitempty"`
-
+	
 	ID *string `json:"id,omitempty"`
 	// Specify the driver that the job runs on. Exactly one of the two available
-	// job drivers is required, either sparkSqlJobDriver or sparkSubmitJobDriver.
+// job drivers is required, either sparkSqlJobDriver or sparkSubmitJobDriver.
 	JobDriver *JobDriver `json:"jobDriver,omitempty"`
-
+	
 	Name *string `json:"name,omitempty"`
-
+	
 	ReleaseLabel *string `json:"releaseLabel,omitempty"`
 	// The configuration of the retry policy that the job runs on.
 	RetryPolicyConfiguration *RetryPolicyConfiguration `json:"retryPolicyConfiguration,omitempty"`
 	// The current status of the retry policy executed on the job.
 	RetryPolicyExecution *RetryPolicyExecution `json:"retryPolicyExecution,omitempty"`
-
+	
 	State *string `json:"state,omitempty"`
-
+	
 	StateDetails *string `json:"stateDetails,omitempty"`
-
+	
 	Tags map[string]*string `json:"tags,omitempty"`
-
+	
 	VirtualClusterID *string `json:"virtualClusterID,omitempty"`
 }
 
 // +kubebuilder:skipversion
 type JobTemplate struct {
+	
 	CreatedAt *metav1.Time `json:"createdAt,omitempty"`
-
+	
 	CreatedBy *string `json:"createdBy,omitempty"`
-
+	
 	ID *string `json:"id,omitempty"`
-
+	
 	Name *string `json:"name,omitempty"`
-
+	
 	Tags map[string]*string `json:"tags,omitempty"`
 }
 
 // +kubebuilder:skipversion
 type JobTemplateData struct {
 	// Specify the driver that the job runs on. Exactly one of the two available
-	// job drivers is required, either sparkSqlJobDriver or sparkSubmitJobDriver.
+// job drivers is required, either sparkSqlJobDriver or sparkSubmitJobDriver.
 	JobDriver *JobDriver `json:"jobDriver,omitempty"`
-
+	
 	JobTags map[string]*string `json:"jobTags,omitempty"`
 }
 
 // +kubebuilder:skipversion
 type ParametricCloudWatchMonitoringConfiguration struct {
+	
 	LogStreamNamePrefix *string `json:"logStreamNamePrefix,omitempty"`
 }
 
 // +kubebuilder:skipversion
 type RetryPolicyConfiguration struct {
+	
 	MaxAttempts *int64 `json:"maxAttempts,omitempty"`
 }
 
 // +kubebuilder:skipversion
 type RetryPolicyExecution struct {
+	
 	CurrentAttemptCount *int64 `json:"currentAttemptCount,omitempty"`
 }
 
 // +kubebuilder:skipversion
 type SparkSQLJobDriver struct {
+	
 	EntryPoint *string `json:"entryPoint,omitempty"`
-
+	
 	SparkSQLParameters *string `json:"sparkSQLParameters,omitempty"`
 }
 
 // +kubebuilder:skipversion
 type SparkSubmitJobDriver struct {
+	
 	EntryPoint *string `json:"entryPoint,omitempty"`
-
+	
 	EntryPointArguments []*string `json:"entryPointArguments,omitempty"`
-
+	
 	SparkSubmitParameters *string `json:"sparkSubmitParameters,omitempty"`
 }
 
 // +kubebuilder:skipversion
 type TemplateParameterConfiguration struct {
+	
 	DefaultValue *string `json:"defaultValue,omitempty"`
 }
 
 // +kubebuilder:skipversion
 type VirtualCluster_SDK struct {
+	
 	ARN *string `json:"arn,omitempty"`
 	// The information about the container provider.
 	ContainerProvider *ContainerProvider `json:"containerProvider,omitempty"`
-
+	
 	CreatedAt *metav1.Time `json:"createdAt,omitempty"`
-
+	
 	ID *string `json:"id,omitempty"`
-
+	
 	Name *string `json:"name,omitempty"`
-
+	
 	State *string `json:"state,omitempty"`
-
+	
 	Tags map[string]*string `json:"tags,omitempty"`
 }

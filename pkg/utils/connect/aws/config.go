@@ -40,7 +40,7 @@ import (
 	"github.com/aws/smithy-go/middleware"
 	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
-	"github.com/go-ini/ini"
+	"gopkg.in/ini.v1"
 	"github.com/pkg/errors"
 	"k8s.io/apimachinery/pkg/types"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -122,7 +122,7 @@ func UseProviderConfig(ctx context.Context, c client.Client, mg resource.Managed
 		return nil, errors.Wrap(err, "cannot track ProviderConfig usage")
 	}
 
-	switch s := pc.Spec.Credentials.Source; s { //nolint:exhaustive
+	switch s := pc.Spec.Credentials.Source; s {
 	case xpv1.CredentialsSourceInjectedIdentity:
 		if pc.Spec.AssumeRole != nil || pc.Spec.AssumeRoleARN != nil {
 			cfg, err := UsePodServiceAccountAssumeRole(ctx, []byte{}, DefaultSection, region, pc)
@@ -454,7 +454,7 @@ func GetConfigV1(ctx context.Context, c client.Client, mg resource.Managed, regi
 	if err := t.Track(ctx, lm); err != nil {
 		return nil, errors.Wrap(err, "cannot track ProviderConfig usage")
 	}
-	switch s := pc.Spec.Credentials.Source; s { //nolint:exhaustive
+	switch s := pc.Spec.Credentials.Source; s {
 	case xpv1.CredentialsSourceInjectedIdentity:
 		if pc.Spec.AssumeRoleARN != nil || pc.Spec.AssumeRole != nil {
 			cfg, err := UsePodServiceAccountV1AssumeRole(ctx, []byte{}, pc, DefaultSection, region)

@@ -23,13 +23,6 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	awsacmpca "github.com/aws/aws-sdk-go-v2/service/acmpca"
 	awsacmpcatypes "github.com/aws/aws-sdk-go-v2/service/acmpca/types"
-	"github.com/crossplane-contrib/provider-aws/apis/acmpca/v1beta1"
-	"github.com/crossplane-contrib/provider-aws/pkg/clients/acmpca"
-	"github.com/crossplane-contrib/provider-aws/pkg/features"
-	connectaws "github.com/crossplane-contrib/provider-aws/pkg/utils/connect/aws"
-	errorutils "github.com/crossplane-contrib/provider-aws/pkg/utils/errors"
-	"github.com/crossplane-contrib/provider-aws/pkg/utils/pointer"
-	custommanaged "github.com/crossplane-contrib/provider-aws/pkg/utils/reconciler/managed"
 	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/controller"
 	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
@@ -39,6 +32,14 @@ import (
 	"github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+
+	"github.com/crossplane-contrib/provider-aws/apis/acmpca/v1beta1"
+	"github.com/crossplane-contrib/provider-aws/pkg/clients/acmpca"
+	"github.com/crossplane-contrib/provider-aws/pkg/features"
+	connectaws "github.com/crossplane-contrib/provider-aws/pkg/utils/connect/aws"
+	errorutils "github.com/crossplane-contrib/provider-aws/pkg/utils/errors"
+	"github.com/crossplane-contrib/provider-aws/pkg/utils/pointer"
+	custommanaged "github.com/crossplane-contrib/provider-aws/pkg/utils/reconciler/managed"
 )
 
 const (

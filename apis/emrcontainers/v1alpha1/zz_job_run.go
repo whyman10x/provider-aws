@@ -29,29 +29,29 @@ type JobRunParameters struct {
 	// Region is which region the JobRun will be created.
 	// +kubebuilder:validation:Required
 	Region string `json:"region"`
-
-	ConfigurationOverrides *string `json:"configurationOverrides,omitempty"`
+	
+	 ConfigurationOverrides *string `json:"configurationOverrides,omitempty"` 
 	// The execution role ARN for the job run.
-	ExecutionRoleARN *string `json:"executionRoleARN,omitempty"`
+	 ExecutionRoleARN *string `json:"executionRoleARN,omitempty"` 
 	// The job driver for the job run.
-	JobDriver *JobDriver `json:"jobDriver,omitempty"`
+	 JobDriver *JobDriver `json:"jobDriver,omitempty"` 
 	// The job template ID to be used to start the job run.
-	JobTemplateID *string `json:"jobTemplateID,omitempty"`
+	 JobTemplateID *string `json:"jobTemplateID,omitempty"` 
 	// The values of job template parameters to start a job run.
-	JobTemplateParameters map[string]*string `json:"jobTemplateParameters,omitempty"`
+	 JobTemplateParameters map[string]*string `json:"jobTemplateParameters,omitempty"` 
 	// The Amazon EMR release version to use for the job run.
-	ReleaseLabel *string `json:"releaseLabel,omitempty"`
+	 ReleaseLabel *string `json:"releaseLabel,omitempty"` 
 	// The retry policy configuration for the job run.
-	RetryPolicyConfiguration *RetryPolicyConfiguration `json:"retryPolicyConfiguration,omitempty"`
+	 RetryPolicyConfiguration *RetryPolicyConfiguration `json:"retryPolicyConfiguration,omitempty"` 
 	// The tags assigned to job runs.
-	Tags                   map[string]*string `json:"tags,omitempty"`
+	 Tags map[string]*string `json:"tags,omitempty"` 
 	CustomJobRunParameters `json:",inline"`
 }
 
 // JobRunSpec defines the desired state of JobRun
 type JobRunSpec struct {
 	xpv1.ResourceSpec `json:",inline"`
-	ForProvider       JobRunParameters `json:"forProvider"`
+	ForProvider JobRunParameters `json:"forProvider"`
 }
 
 // JobRunObservation defines the observed state of JobRun
@@ -77,8 +77,9 @@ type JobRunObservation struct {
 // JobRunStatus defines the observed state of JobRun.
 type JobRunStatus struct {
 	xpv1.ResourceStatus `json:",inline"`
-	AtProvider          JobRunObservation `json:"atProvider,omitempty"`
+	AtProvider JobRunObservation `json:"atProvider,omitempty"`
 }
+
 
 // +kubebuilder:object:root=true
 
@@ -93,8 +94,8 @@ type JobRunStatus struct {
 type JobRun struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              JobRunSpec   `json:"spec"`
-	Status            JobRunStatus `json:"status,omitempty"`
+	Spec   JobRunSpec   `json:"spec"`
+	Status JobRunStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -103,7 +104,7 @@ type JobRun struct {
 type JobRunList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []JobRun `json:"items"`
+	Items []JobRun `json:"items"`
 }
 
 // Repository type metadata.
@@ -117,3 +118,4 @@ var (
 func init() {
 	SchemeBuilder.Register(&JobRun{}, &JobRunList{})
 }
+

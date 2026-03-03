@@ -132,6 +132,7 @@ type VPCCIDRBlockStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,aws}
 // +kubebuilder:deprecatedversion:warning="Please use v1beta1 version of this resource that has identical schema."
+//
 // Deprecated: Please use v1beta1 version of this resource.
 type VPCCIDRBlock struct {
 	metav1.TypeMeta   `json:",inline"`
@@ -145,6 +146,7 @@ type VPCCIDRBlock struct {
 
 // VPCCIDRBlockList contains a list of VPCCIDRBlocks
 // +kubebuilder:deprecatedversion:warning="Please use v1beta1 version of this resource that has identical schema."
+//
 // Deprecated: Please use v1beta1 version of this resource.
 type VPCCIDRBlockList struct {
 	metav1.TypeMeta `json:",inline"`

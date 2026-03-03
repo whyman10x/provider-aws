@@ -227,7 +227,7 @@ func sanitizedTopicConfigurations(configs []types.TopicConfiguration) []types.To
 func GenerateLambdaConfiguration(config *v1beta1.NotificationConfiguration) []types.LambdaFunctionConfiguration {
 	// NOTE(muvaf): We skip prealloc because the behavior of AWS SDK differs when
 	// the array is 0 element vs nil.
-	var configurations []types.LambdaFunctionConfiguration //nolint:prealloc
+	var configurations []types.LambdaFunctionConfiguration
 	for _, v := range config.LambdaFunctionConfigurations {
 		conf := types.LambdaFunctionConfiguration{
 			Filter:            nil,
@@ -249,7 +249,7 @@ func GenerateLambdaConfiguration(config *v1beta1.NotificationConfiguration) []ty
 func GenerateTopicConfigurations(config *v1beta1.NotificationConfiguration) []types.TopicConfiguration {
 	// NOTE(muvaf): We skip prealloc because the behavior of AWS SDK differs when
 	// the array is 0 element vs nil.
-	var configurations []types.TopicConfiguration //nolint:prealloc
+	var configurations []types.TopicConfiguration
 	for _, v := range config.TopicConfigurations {
 		conf := types.TopicConfiguration{
 			Id:       v.ID,
@@ -270,7 +270,7 @@ func GenerateTopicConfigurations(config *v1beta1.NotificationConfiguration) []ty
 func GenerateQueueConfigurations(config *v1beta1.NotificationConfiguration) []types.QueueConfiguration {
 	// NOTE(muvaf): We skip prealloc because the behavior of AWS SDK differs when
 	// the array is 0 element vs nil.
-	var configurations []types.QueueConfiguration //nolint:prealloc
+	var configurations []types.QueueConfiguration
 	for _, v := range config.QueueConfigurations {
 		conf := types.QueueConfiguration{
 			Id:       v.ID,

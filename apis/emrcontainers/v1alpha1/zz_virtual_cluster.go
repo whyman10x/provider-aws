@@ -30,17 +30,17 @@ type VirtualClusterParameters struct {
 	// +kubebuilder:validation:Required
 	Region string `json:"region"`
 	// The container provider of the virtual cluster.
-	// +kubebuilder:validation:Required
+	 // +kubebuilder:validation:Required
 	ContainerProvider *ContainerProvider `json:"containerProvider"`
 	// The tags assigned to the virtual cluster.
-	Tags                           map[string]*string `json:"tags,omitempty"`
+	 Tags map[string]*string `json:"tags,omitempty"` 
 	CustomVirtualClusterParameters `json:",inline"`
 }
 
 // VirtualClusterSpec defines the desired state of VirtualCluster
 type VirtualClusterSpec struct {
 	xpv1.ResourceSpec `json:",inline"`
-	ForProvider       VirtualClusterParameters `json:"forProvider"`
+	ForProvider VirtualClusterParameters `json:"forProvider"`
 }
 
 // VirtualClusterObservation defines the observed state of VirtualCluster
@@ -58,8 +58,9 @@ type VirtualClusterObservation struct {
 // VirtualClusterStatus defines the observed state of VirtualCluster.
 type VirtualClusterStatus struct {
 	xpv1.ResourceStatus `json:",inline"`
-	AtProvider          VirtualClusterObservation `json:"atProvider,omitempty"`
+	AtProvider VirtualClusterObservation `json:"atProvider,omitempty"`
 }
+
 
 // +kubebuilder:object:root=true
 
@@ -74,8 +75,8 @@ type VirtualClusterStatus struct {
 type VirtualCluster struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              VirtualClusterSpec   `json:"spec"`
-	Status            VirtualClusterStatus `json:"status,omitempty"`
+	Spec   VirtualClusterSpec   `json:"spec"`
+	Status VirtualClusterStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
@@ -84,7 +85,7 @@ type VirtualCluster struct {
 type VirtualClusterList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []VirtualCluster `json:"items"`
+	Items []VirtualCluster `json:"items"`
 }
 
 // Repository type metadata.
@@ -98,3 +99,4 @@ var (
 func init() {
 	SchemeBuilder.Register(&VirtualCluster{}, &VirtualClusterList{})
 }
+

@@ -94,7 +94,7 @@ func GenerateVirtualCluster(resp *svcsdk.DescribeVirtualClusterOutput) *svcapity
 		cr.Spec.ForProvider.Tags = nil
 	}
 
-	return cr
+return cr
 }
 
 // GenerateCreateVirtualClusterInput returns a create input.
@@ -135,6 +135,7 @@ func GenerateCreateVirtualClusterInput(cr *svcapitypes.VirtualCluster) *svcsdk.C
 	return res
 }
 
+
 // GenerateDeleteVirtualClusterInput returns a deletion input.
 func GenerateDeleteVirtualClusterInput(cr *svcapitypes.VirtualCluster) *svcsdk.DeleteVirtualClusterInput {
 	res := &svcsdk.DeleteVirtualClusterInput{}
@@ -149,5 +150,5 @@ func GenerateDeleteVirtualClusterInput(cr *svcapitypes.VirtualCluster) *svcsdk.D
 // IsNotFound returns whether the given error is of type NotFound or not.
 func IsNotFound(err error) bool {
 	awsErr, ok := err.(awserr.Error)
-	return ok && awsErr.Code() == "ResourceNotFoundException"
+	return ok && awsErr.Code() == "ResourceNotFoundException" 
 }

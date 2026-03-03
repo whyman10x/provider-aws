@@ -42,7 +42,7 @@ type InstanceParameters struct {
 	//
 	// Constraints: Maximum 64 ASCII characters
 	// +optional
-	ClientToken *string `json:"clientToken,omitempty"`
+	ClientToken *string `json:"clientToken,omitempty"` //nolint:gosec
 
 	// The CPU options for the instance. For more information, see Optimizing CPU
 	// Options (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-optimize-cpu.html)
@@ -309,7 +309,7 @@ type InstanceObservation struct {
 	// +optional
 	CapacityReservationSpecification *CapacityReservationSpecificationResponse `json:"capacityReservationSpecification,omitempty"`
 	// +optional
-	ClientToken *string `json:"clientToken,omitempty"`
+	ClientToken *string `json:"clientToken,omitempty"` //nolint:gosec
 	// +optional
 	CPUOptons *CPUOptionsRequest `json:"cpuOptions,omitempty"`
 	// +optional

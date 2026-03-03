@@ -251,6 +251,7 @@ type RepositoryPolicyStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,aws}
 // +kubebuilder:deprecatedversion:warning="Please use v1beta1 version of this resource that has identical schema."
+//
 // Deprecated: Please use v1beta1 version of this resource.
 type RepositoryPolicy struct {
 	metav1.TypeMeta   `json:",inline"`
@@ -264,6 +265,7 @@ type RepositoryPolicy struct {
 
 // RepositoryPolicyList contains a list of RepositoryPolicies
 // +kubebuilder:deprecatedversion:warning="Please use v1beta1 version of this resource that has identical schema."
+//
 // Deprecated: Please use v1beta1 version of this resource.
 type RepositoryPolicyList struct {
 	metav1.TypeMeta `json:",inline"`

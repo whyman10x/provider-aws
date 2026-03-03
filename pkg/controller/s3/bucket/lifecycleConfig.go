@@ -149,7 +149,7 @@ func GenerateLifecycleConfiguration(name string, config *v1beta1.BucketLifecycle
 func GenerateLifecycleRules(in []v1beta1.LifecycleRule) []types.LifecycleRule { //nolint:gocyclo
 	// NOTE(muvaf): prealloc is disabled due to AWS requiring nil instead
 	// of 0-length for empty slices.
-	var result []types.LifecycleRule //nolint:prealloc
+	var result []types.LifecycleRule
 	for _, local := range in {
 		rule := types.LifecycleRule{
 			ID:     local.ID,

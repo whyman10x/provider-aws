@@ -115,6 +115,7 @@ type RepositoryStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,aws}
 // +kubebuilder:deprecatedversion:warning="Please use v1beta1 version of this resource that has identical schema."
+//
 // Deprecated: Please use v1beta1 version of this resource.
 type Repository struct {
 	metav1.TypeMeta   `json:",inline"`
@@ -128,6 +129,7 @@ type Repository struct {
 
 // RepositoryList contains a list of ECRs
 // +kubebuilder:deprecatedversion:warning="Please use v1beta1 version of this resource that has identical schema."
+//
 // Deprecated: Please use v1beta1 version of this resource.
 type RepositoryList struct {
 	metav1.TypeMeta `json:",inline"`

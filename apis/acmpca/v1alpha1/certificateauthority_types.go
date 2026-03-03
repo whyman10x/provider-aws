@@ -199,6 +199,7 @@ type CertificateAuthorityStatus struct {
 // +kubebuilder:subresource:status
 // +kubebuilder:resource:scope=Cluster,categories={crossplane,managed,aws}
 // +kubebuilder:deprecatedversion:warning="Please use v1beta1 version of this resource that has identical schema."
+//
 // Deprecated: Please use v1beta1 version of this resource.
 type CertificateAuthority struct {
 	metav1.TypeMeta   `json:",inline"`
@@ -212,6 +213,7 @@ type CertificateAuthority struct {
 
 // CertificateAuthorityList contains a list of CertificateAuthority
 // +kubebuilder:deprecatedversion:warning="Please use v1beta1 version of this resource that has identical schema."
+//
 // Deprecated: Please use v1beta1 version of this resource.
 type CertificateAuthorityList struct {
 	metav1.TypeMeta `json:",inline"`

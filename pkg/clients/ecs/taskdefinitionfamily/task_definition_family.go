@@ -68,7 +68,7 @@ func GenerateTaskDefinitionFamilyFromDescribe(resp *awsecs.DescribeTaskDefinitio
 	parameters := &cr.Spec.ForProvider
 
 	if resp.Tags != nil {
-		f0 := []*ecs.Tag{}
+		f0 := make([]*ecs.Tag, 0, len(resp.Tags))
 		for _, f0iter := range resp.Tags {
 			f0elem := &ecs.Tag{}
 			if f0iter.Key != nil {
@@ -85,11 +85,11 @@ func GenerateTaskDefinitionFamilyFromDescribe(resp *awsecs.DescribeTaskDefinitio
 	}
 	if resp.TaskDefinition != nil {
 		if resp.TaskDefinition.ContainerDefinitions != nil {
-			f1f1 := []*ecs.ContainerDefinition{}
+			f1f1 := make([]*ecs.ContainerDefinition, 0, len(resp.TaskDefinition.ContainerDefinitions))
 			for _, f1f1iter := range resp.TaskDefinition.ContainerDefinitions {
 				f1f1elem := &ecs.ContainerDefinition{}
 				if f1f1iter.Command != nil {
-					f1f1elemf0 := []*string{}
+					f1f1elemf0 := make([]*string, 0, len(f1f1iter.Command))
 					for _, f1f1elemf0iter := range f1f1iter.Command {
 						var f1f1elemf0elem string
 						f1f1elemf0elem = *f1f1elemf0iter
@@ -101,7 +101,7 @@ func GenerateTaskDefinitionFamilyFromDescribe(resp *awsecs.DescribeTaskDefinitio
 					f1f1elem.CPU = f1f1iter.Cpu
 				}
 				if f1f1iter.CredentialSpecs != nil {
-					f1f1elemf2 := []*string{}
+					f1f1elemf2 := make([]*string, 0, len(f1f1iter.CredentialSpecs))
 					for _, f1f1elemf2iter := range f1f1iter.CredentialSpecs {
 						var f1f1elemf2elem string
 						f1f1elemf2elem = *f1f1elemf2iter
@@ -110,7 +110,7 @@ func GenerateTaskDefinitionFamilyFromDescribe(resp *awsecs.DescribeTaskDefinitio
 					f1f1elem.CredentialSpecs = f1f1elemf2
 				}
 				if f1f1iter.DependsOn != nil {
-					f1f1elemf3 := []*ecs.ContainerDependency{}
+					f1f1elemf3 := make([]*ecs.ContainerDependency, 0, len(f1f1iter.DependsOn))
 					for _, f1f1elemf3iter := range f1f1iter.DependsOn {
 						f1f1elemf3elem := &ecs.ContainerDependency{}
 						if f1f1elemf3iter.Condition != nil {
@@ -127,7 +127,7 @@ func GenerateTaskDefinitionFamilyFromDescribe(resp *awsecs.DescribeTaskDefinitio
 					f1f1elem.DisableNetworking = f1f1iter.DisableNetworking
 				}
 				if f1f1iter.DnsSearchDomains != nil {
-					f1f1elemf5 := []*string{}
+					f1f1elemf5 := make([]*string, 0, len(f1f1iter.DnsSearchDomains))
 					for _, f1f1elemf5iter := range f1f1iter.DnsSearchDomains {
 						var f1f1elemf5elem string
 						f1f1elemf5elem = *f1f1elemf5iter
@@ -136,7 +136,7 @@ func GenerateTaskDefinitionFamilyFromDescribe(resp *awsecs.DescribeTaskDefinitio
 					f1f1elem.DNSSearchDomains = f1f1elemf5
 				}
 				if f1f1iter.DnsServers != nil {
-					f1f1elemf6 := []*string{}
+					f1f1elemf6 := make([]*string, 0, len(f1f1iter.DnsServers))
 					for _, f1f1elemf6iter := range f1f1iter.DnsServers {
 						var f1f1elemf6elem string
 						f1f1elemf6elem = *f1f1elemf6iter
@@ -154,7 +154,7 @@ func GenerateTaskDefinitionFamilyFromDescribe(resp *awsecs.DescribeTaskDefinitio
 					f1f1elem.DockerLabels = f1f1elemf7
 				}
 				if f1f1iter.DockerSecurityOptions != nil {
-					f1f1elemf8 := []*string{}
+					f1f1elemf8 := make([]*string, 0, len(f1f1iter.DockerSecurityOptions))
 					for _, f1f1elemf8iter := range f1f1iter.DockerSecurityOptions {
 						var f1f1elemf8elem string
 						f1f1elemf8elem = *f1f1elemf8iter
@@ -163,7 +163,7 @@ func GenerateTaskDefinitionFamilyFromDescribe(resp *awsecs.DescribeTaskDefinitio
 					f1f1elem.DockerSecurityOptions = f1f1elemf8
 				}
 				if f1f1iter.EntryPoint != nil {
-					f1f1elemf9 := []*string{}
+					f1f1elemf9 := make([]*string, 0, len(f1f1iter.EntryPoint))
 					for _, f1f1elemf9iter := range f1f1iter.EntryPoint {
 						var f1f1elemf9elem string
 						f1f1elemf9elem = *f1f1elemf9iter
@@ -172,7 +172,7 @@ func GenerateTaskDefinitionFamilyFromDescribe(resp *awsecs.DescribeTaskDefinitio
 					f1f1elem.EntryPoint = f1f1elemf9
 				}
 				if f1f1iter.Environment != nil {
-					f1f1elemf10 := []*ecs.KeyValuePair{}
+					f1f1elemf10 := make([]*ecs.KeyValuePair, 0, len(f1f1iter.Environment))
 					for _, f1f1elemf10iter := range f1f1iter.Environment {
 						f1f1elemf10elem := &ecs.KeyValuePair{}
 						if f1f1elemf10iter.Name != nil {
@@ -186,7 +186,7 @@ func GenerateTaskDefinitionFamilyFromDescribe(resp *awsecs.DescribeTaskDefinitio
 					f1f1elem.Environment = f1f1elemf10
 				}
 				if f1f1iter.EnvironmentFiles != nil {
-					f1f1elemf11 := []*ecs.EnvironmentFile{}
+					f1f1elemf11 := make([]*ecs.EnvironmentFile, 0, len(f1f1iter.EnvironmentFiles))
 					for _, f1f1elemf11iter := range f1f1iter.EnvironmentFiles {
 						f1f1elemf11elem := &ecs.EnvironmentFile{}
 						if f1f1elemf11iter.Type != nil {
@@ -203,7 +203,7 @@ func GenerateTaskDefinitionFamilyFromDescribe(resp *awsecs.DescribeTaskDefinitio
 					f1f1elem.Essential = f1f1iter.Essential
 				}
 				if f1f1iter.ExtraHosts != nil {
-					f1f1elemf13 := []*ecs.HostEntry{}
+					f1f1elemf13 := make([]*ecs.HostEntry, 0, len(f1f1iter.ExtraHosts))
 					for _, f1f1elemf13iter := range f1f1iter.ExtraHosts {
 						f1f1elemf13elem := &ecs.HostEntry{}
 						if f1f1elemf13iter.Hostname != nil {
@@ -267,7 +267,7 @@ func GenerateTaskDefinitionFamilyFromDescribe(resp *awsecs.DescribeTaskDefinitio
 					f1f1elem.Interactive = f1f1iter.Interactive
 				}
 				if f1f1iter.Links != nil {
-					f1f1elemf19 := []*string{}
+					f1f1elemf19 := make([]*string, 0, len(f1f1iter.Links))
 					for _, f1f1elemf19iter := range f1f1iter.Links {
 						var f1f1elemf19elem string
 						f1f1elemf19elem = *f1f1elemf19iter
@@ -374,7 +374,7 @@ func GenerateTaskDefinitionFamilyFromDescribe(resp *awsecs.DescribeTaskDefinitio
 						f1f1elemf21.Options = f1f1elemf21f1
 					}
 					if f1f1iter.LogConfiguration.SecretOptions != nil {
-						f1f1elemf21f2 := []*ecs.Secret{}
+						f1f1elemf21f2 := make([]*ecs.Secret, 0, len(f1f1iter.LogConfiguration.SecretOptions))
 						for _, f1f1elemf21f2iter := range f1f1iter.LogConfiguration.SecretOptions {
 							f1f1elemf21f2elem := &ecs.Secret{}
 							if f1f1elemf21f2iter.Name != nil {
