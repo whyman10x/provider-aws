@@ -2,8 +2,8 @@ package testing
 
 import (
 	"github.com/aws/aws-sdk-go/aws/awserr"
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
-	"github.com/crossplane/crossplane-runtime/pkg/meta"
+	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/meta"
 
 	"github.com/crossplane-contrib/provider-aws/apis/s3/common"
 	svcapitypes "github.com/crossplane-contrib/provider-aws/apis/s3control/v1alpha1"

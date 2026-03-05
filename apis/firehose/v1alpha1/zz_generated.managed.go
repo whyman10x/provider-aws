@@ -18,7 +18,7 @@ limitations under the License.
 
 package v1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 
 // GetCondition of this DeliveryStream.
 func (mg *DeliveryStream) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
@@ -38,11 +38,6 @@ func (mg *DeliveryStream) GetManagementPolicies() xpv1.ManagementPolicies {
 // GetProviderConfigReference of this DeliveryStream.
 func (mg *DeliveryStream) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this DeliveryStream.
-func (mg *DeliveryStream) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this DeliveryStream.
@@ -68,11 +63,6 @@ func (mg *DeliveryStream) SetManagementPolicies(r xpv1.ManagementPolicies) {
 // SetProviderConfigReference of this DeliveryStream.
 func (mg *DeliveryStream) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this DeliveryStream.
-func (mg *DeliveryStream) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this DeliveryStream.

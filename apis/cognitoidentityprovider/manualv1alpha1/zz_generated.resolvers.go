@@ -21,7 +21,7 @@ package manualv1alpha1
 import (
 	"context"
 	v1alpha1 "github.com/crossplane-contrib/provider-aws/apis/cognitoidentityprovider/v1alpha1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -36,6 +36,7 @@ func (mg *GroupUserMembership) ResolveReferences(ctx context.Context, c client.R
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: mg.Spec.ForProvider.UserPoolID,
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.UserPoolIDRef,
 		Selector:     mg.Spec.ForProvider.UserPoolIDSelector,
 		To: reference.To{
@@ -52,6 +53,7 @@ func (mg *GroupUserMembership) ResolveReferences(ctx context.Context, c client.R
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: mg.Spec.ForProvider.Groupname,
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.GroupnameRef,
 		Selector:     mg.Spec.ForProvider.GroupnameSelector,
 		To: reference.To{

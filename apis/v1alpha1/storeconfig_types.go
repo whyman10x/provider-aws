@@ -17,13 +17,19 @@ limitations under the License.
 package v1alpha1
 
 import (
-	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+	xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 // A StoreConfigSpec defines the desired state of a ProviderConfig.
 type StoreConfigSpec struct {
-	xpv1.SecretStoreConfig `json:",inline"`
+	// Type of the store config.
+	// +optional
+	Type *string `json:"type,omitempty"`
+
+	// DefaultScope used for connection details publication.
+	// +optional
+	DefaultScope *string `json:"defaultScope,omitempty"`
 }
 
 // A StoreConfigStatus represents the status of a StoreConfig.
@@ -54,13 +60,6 @@ type StoreConfigList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
 	Items           []StoreConfig `json:"items"`
-}
-
-// Note(turkenh): To be generated with AngryJet
-
-// GetStoreConfig returns SecretStoreConfig
-func (in *StoreConfig) GetStoreConfig() xpv1.SecretStoreConfig {
-	return in.Spec.SecretStoreConfig
 }
 
 // GetCondition of this StoreConfig.

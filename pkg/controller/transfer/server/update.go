@@ -4,7 +4,7 @@ import (
 	"context"
 
 	svcsdk "github.com/aws/aws-sdk-go/service/transfer"
-	"github.com/crossplane/crossplane-runtime/pkg/reconciler/managed"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/reconciler/managed"
 	"github.com/pkg/errors"
 
 	svcapitypes "github.com/crossplane-contrib/provider-aws/apis/transfer/v1alpha1"

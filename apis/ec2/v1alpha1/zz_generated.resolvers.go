@@ -27,7 +27,7 @@ import (
 	v1beta11 "github.com/crossplane-contrib/provider-aws/apis/iam/v1beta1"
 	v1alpha12 "github.com/crossplane-contrib/provider-aws/apis/kms/v1alpha1"
 	v1beta12 "github.com/crossplane-contrib/provider-aws/apis/s3/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -42,6 +42,7 @@ func (mg *FlowLog) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomFlowLogParameters.VPCID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomFlowLogParameters.VPCIDRef,
 		Selector:     mg.Spec.ForProvider.CustomFlowLogParameters.VPCIDSelector,
 		To: reference.To{
@@ -58,6 +59,7 @@ func (mg *FlowLog) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomFlowLogParameters.TransitGatewayID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomFlowLogParameters.TransitGatewayIDRef,
 		Selector:     mg.Spec.ForProvider.CustomFlowLogParameters.TransitGatewayIDSelector,
 		To: reference.To{
@@ -74,6 +76,7 @@ func (mg *FlowLog) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomFlowLogParameters.TransitGatewayAttachmentID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomFlowLogParameters.TransitGatewayAttachmentIDRef,
 		Selector:     mg.Spec.ForProvider.CustomFlowLogParameters.TransitGatewayAttachmentIDSelector,
 		To: reference.To{
@@ -90,6 +93,7 @@ func (mg *FlowLog) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomFlowLogParameters.SubnetID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomFlowLogParameters.SubnetIDRef,
 		Selector:     mg.Spec.ForProvider.CustomFlowLogParameters.SubnetIDSelector,
 		To: reference.To{
@@ -106,6 +110,7 @@ func (mg *FlowLog) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomFlowLogParameters.DeliverLogsPermissionARN),
 		Extract:      v1beta11.RoleARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomFlowLogParameters.DeliverLogsPermissionARNRef,
 		Selector:     mg.Spec.ForProvider.CustomFlowLogParameters.DeliverLogsPermissionARNSelector,
 		To: reference.To{
@@ -122,6 +127,7 @@ func (mg *FlowLog) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomFlowLogParameters.CloudWatchLogDestination),
 		Extract:      v1alpha1.LogGroupARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomFlowLogParameters.CloudWatchLogDestinationRef,
 		Selector:     mg.Spec.ForProvider.CustomFlowLogParameters.CloudWatchLogDestinationSelector,
 		To: reference.To{
@@ -138,6 +144,7 @@ func (mg *FlowLog) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomFlowLogParameters.S3BucketLogDestination),
 		Extract:      v1beta12.BucketARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomFlowLogParameters.S3BucketLogDestinationRef,
 		Selector:     mg.Spec.ForProvider.CustomFlowLogParameters.S3BucketLogDestinationSelector,
 		To: reference.To{
@@ -164,6 +171,7 @@ func (mg *LaunchTemplateVersion) ResolveReferences(ctx context.Context, c client
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomLaunchTemplateVersionParameters.LaunchTemplateID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomLaunchTemplateVersionParameters.LaunchTemplateIDRef,
 		Selector:     mg.Spec.ForProvider.CustomLaunchTemplateVersionParameters.LaunchTemplateIDSelector,
 		To: reference.To{
@@ -180,6 +188,7 @@ func (mg *LaunchTemplateVersion) ResolveReferences(ctx context.Context, c client
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomLaunchTemplateVersionParameters.LaunchTemplateName),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomLaunchTemplateVersionParameters.LaunchTemplateNameRef,
 		Selector:     mg.Spec.ForProvider.CustomLaunchTemplateVersionParameters.LaunchTemplateNameSelector,
 		To: reference.To{
@@ -206,6 +215,7 @@ func (mg *Route) ResolveReferences(ctx context.Context, c client.Reader) error {
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomRouteParameters.TransitGatewayID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomRouteParameters.TransitGatewayIDRef,
 		Selector:     mg.Spec.ForProvider.CustomRouteParameters.TransitGatewayIDSelector,
 		To: reference.To{
@@ -222,6 +232,7 @@ func (mg *Route) ResolveReferences(ctx context.Context, c client.Reader) error {
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomRouteParameters.NATGatewayID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomRouteParameters.NATGatewayIDRef,
 		Selector:     mg.Spec.ForProvider.CustomRouteParameters.NATGatewayIDSelector,
 		To: reference.To{
@@ -238,6 +249,7 @@ func (mg *Route) ResolveReferences(ctx context.Context, c client.Reader) error {
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomRouteParameters.VPCPeeringConnectionID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomRouteParameters.VPCPeeringConnectionIDRef,
 		Selector:     mg.Spec.ForProvider.CustomRouteParameters.VPCPeeringConnectionIDSelector,
 		To: reference.To{
@@ -254,6 +266,7 @@ func (mg *Route) ResolveReferences(ctx context.Context, c client.Reader) error {
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomRouteParameters.RouteTableID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomRouteParameters.RouteTableIDRef,
 		Selector:     mg.Spec.ForProvider.CustomRouteParameters.RouteTableIDSelector,
 		To: reference.To{
@@ -270,6 +283,7 @@ func (mg *Route) ResolveReferences(ctx context.Context, c client.Reader) error {
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomRouteParameters.InstanceID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomRouteParameters.InstanceIDRef,
 		Selector:     mg.Spec.ForProvider.CustomRouteParameters.InstanceIDSelector,
 		To: reference.To{
@@ -286,6 +300,7 @@ func (mg *Route) ResolveReferences(ctx context.Context, c client.Reader) error {
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomRouteParameters.GatewayID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomRouteParameters.GatewayIDRef,
 		Selector:     mg.Spec.ForProvider.CustomRouteParameters.GatewayIDSelector,
 		To: reference.To{
@@ -312,6 +327,7 @@ func (mg *TransitGatewayRoute) ResolveReferences(ctx context.Context, c client.R
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomTransitGatewayRouteParameters.TransitGatewayAttachmentID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomTransitGatewayRouteParameters.TransitGatewayAttachmentIDRef,
 		Selector:     mg.Spec.ForProvider.CustomTransitGatewayRouteParameters.TransitGatewayAttachmentIDSelector,
 		To: reference.To{
@@ -328,6 +344,7 @@ func (mg *TransitGatewayRoute) ResolveReferences(ctx context.Context, c client.R
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomTransitGatewayRouteParameters.TransitGatewayRouteTableID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomTransitGatewayRouteParameters.TransitGatewayRouteTableIDRef,
 		Selector:     mg.Spec.ForProvider.CustomTransitGatewayRouteParameters.TransitGatewayRouteTableIDSelector,
 		To: reference.To{
@@ -354,6 +371,7 @@ func (mg *TransitGatewayRouteTable) ResolveReferences(ctx context.Context, c cli
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomTransitGatewayRouteTableParameters.TransitGatewayID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomTransitGatewayRouteTableParameters.TransitGatewayIDRef,
 		Selector:     mg.Spec.ForProvider.CustomTransitGatewayRouteTableParameters.TransitGatewayIDSelector,
 		To: reference.To{
@@ -381,6 +399,7 @@ func (mg *TransitGatewayVPCAttachment) ResolveReferences(ctx context.Context, c 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomTransitGatewayVPCAttachmentParameters.VPCID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomTransitGatewayVPCAttachmentParameters.VPCIDRef,
 		Selector:     mg.Spec.ForProvider.CustomTransitGatewayVPCAttachmentParameters.VPCIDSelector,
 		To: reference.To{
@@ -397,6 +416,7 @@ func (mg *TransitGatewayVPCAttachment) ResolveReferences(ctx context.Context, c 
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomTransitGatewayVPCAttachmentParameters.SubnetIDs),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomTransitGatewayVPCAttachmentParameters.SubnetIDRefs,
 		Selector:      mg.Spec.ForProvider.CustomTransitGatewayVPCAttachmentParameters.SubnetIDSelector,
 		To: reference.To{
@@ -413,6 +433,7 @@ func (mg *TransitGatewayVPCAttachment) ResolveReferences(ctx context.Context, c 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomTransitGatewayVPCAttachmentParameters.TransitGatewayID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomTransitGatewayVPCAttachmentParameters.TransitGatewayIDRef,
 		Selector:     mg.Spec.ForProvider.CustomTransitGatewayVPCAttachmentParameters.TransitGatewayIDSelector,
 		To: reference.To{
@@ -440,6 +461,7 @@ func (mg *VPCEndpoint) ResolveReferences(ctx context.Context, c client.Reader) e
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomVPCEndpointParameters.VPCID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomVPCEndpointParameters.VPCIDRef,
 		Selector:     mg.Spec.ForProvider.CustomVPCEndpointParameters.VPCIDSelector,
 		To: reference.To{
@@ -456,6 +478,7 @@ func (mg *VPCEndpoint) ResolveReferences(ctx context.Context, c client.Reader) e
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomVPCEndpointParameters.SecurityGroupIDs),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomVPCEndpointParameters.SecurityGroupIDRefs,
 		Selector:      mg.Spec.ForProvider.CustomVPCEndpointParameters.SecurityGroupIDSelector,
 		To: reference.To{
@@ -472,6 +495,7 @@ func (mg *VPCEndpoint) ResolveReferences(ctx context.Context, c client.Reader) e
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomVPCEndpointParameters.SubnetIDs),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomVPCEndpointParameters.SubnetIDRefs,
 		Selector:      mg.Spec.ForProvider.CustomVPCEndpointParameters.SubnetIDSelector,
 		To: reference.To{
@@ -488,6 +512,7 @@ func (mg *VPCEndpoint) ResolveReferences(ctx context.Context, c client.Reader) e
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomVPCEndpointParameters.RouteTableIDs),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomVPCEndpointParameters.RouteTableIDRefs,
 		Selector:      mg.Spec.ForProvider.CustomVPCEndpointParameters.RouteTableIDSelector,
 		To: reference.To{
@@ -514,6 +539,7 @@ func (mg *VPCEndpointServiceConfiguration) ResolveReferences(ctx context.Context
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomVPCEndpointServiceConfigurationParameters.GatewayLoadBalancerARNs),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomVPCEndpointServiceConfigurationParameters.GatewayLoadBalancerARNRefs,
 		Selector:      mg.Spec.ForProvider.CustomVPCEndpointServiceConfigurationParameters.GatewayLoadBalancerARNSelector,
 		To: reference.To{
@@ -530,6 +556,7 @@ func (mg *VPCEndpointServiceConfiguration) ResolveReferences(ctx context.Context
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomVPCEndpointServiceConfigurationParameters.NetworkLoadBalancerARNs),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomVPCEndpointServiceConfigurationParameters.NetworkLoadBalancerARNRefs,
 		Selector:      mg.Spec.ForProvider.CustomVPCEndpointServiceConfigurationParameters.NetworkLoadBalancerARNSelector,
 		To: reference.To{
@@ -556,6 +583,7 @@ func (mg *VPCPeeringConnection) ResolveReferences(ctx context.Context, c client.
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomVPCPeeringConnectionParameters.VPCID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomVPCPeeringConnectionParameters.VPCIDRef,
 		Selector:     mg.Spec.ForProvider.CustomVPCPeeringConnectionParameters.VPCIDSelector,
 		To: reference.To{
@@ -572,6 +600,7 @@ func (mg *VPCPeeringConnection) ResolveReferences(ctx context.Context, c client.
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomVPCPeeringConnectionParameters.PeerVPCID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomVPCPeeringConnectionParameters.PeerVPCIDRef,
 		Selector:     mg.Spec.ForProvider.CustomVPCPeeringConnectionParameters.PeerVPCIDSelector,
 		To: reference.To{
@@ -598,6 +627,7 @@ func (mg *Volume) ResolveReferences(ctx context.Context, c client.Reader) error 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomVolumeParameters.KMSKeyID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomVolumeParameters.KMSKeyIDRef,
 		Selector:     mg.Spec.ForProvider.CustomVolumeParameters.KMSKeyIDSelector,
 		To: reference.To{

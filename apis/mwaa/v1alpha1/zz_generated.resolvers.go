@@ -24,7 +24,7 @@ import (
 	v1beta11 "github.com/crossplane-contrib/provider-aws/apis/iam/v1beta1"
 	v1alpha1 "github.com/crossplane-contrib/provider-aws/apis/kms/v1alpha1"
 	v1beta1 "github.com/crossplane-contrib/provider-aws/apis/s3/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -40,6 +40,7 @@ func (mg *Environment) ResolveReferences(ctx context.Context, c client.Reader) e
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomEnvironmentParameters.KMSKey),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomEnvironmentParameters.KMSKeyRef,
 		Selector:     mg.Spec.ForProvider.CustomEnvironmentParameters.KMSKeySelector,
 		To: reference.To{
@@ -56,6 +57,7 @@ func (mg *Environment) ResolveReferences(ctx context.Context, c client.Reader) e
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomEnvironmentParameters.SourceBucketARN),
 		Extract:      v1beta1.BucketARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomEnvironmentParameters.SourceBucketARNRef,
 		Selector:     mg.Spec.ForProvider.CustomEnvironmentParameters.SourceBucketARNSelector,
 		To: reference.To{
@@ -72,6 +74,7 @@ func (mg *Environment) ResolveReferences(ctx context.Context, c client.Reader) e
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomEnvironmentParameters.ExecutionRoleARN),
 		Extract:      v1beta11.RoleARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomEnvironmentParameters.ExecutionRoleARNRef,
 		Selector:     mg.Spec.ForProvider.CustomEnvironmentParameters.ExecutionRoleARNSelector,
 		To: reference.To{
@@ -88,6 +91,7 @@ func (mg *Environment) ResolveReferences(ctx context.Context, c client.Reader) e
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: mg.Spec.ForProvider.CustomEnvironmentParameters.NetworkConfiguration.SecurityGroupIDs,
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomEnvironmentParameters.NetworkConfiguration.SecurityGroupIDRefs,
 		Selector:      mg.Spec.ForProvider.CustomEnvironmentParameters.NetworkConfiguration.SecurityGroupIDSelector,
 		To: reference.To{
@@ -104,6 +108,7 @@ func (mg *Environment) ResolveReferences(ctx context.Context, c client.Reader) e
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: mg.Spec.ForProvider.CustomEnvironmentParameters.NetworkConfiguration.SubnetIDs,
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomEnvironmentParameters.NetworkConfiguration.SubnetIDRefs,
 		Selector:      mg.Spec.ForProvider.CustomEnvironmentParameters.NetworkConfiguration.SubnetIDSelector,
 		To: reference.To{

@@ -21,7 +21,7 @@ package v1alpha1
 import (
 	"context"
 	v1beta1 "github.com/crossplane-contrib/provider-aws/apis/ec2/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -38,6 +38,7 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 		mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 			CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomClusterParameters.CustomBrokerNodeGroupInfo.ClientSubnets),
 			Extract:       reference.ExternalName(),
+			Namespace:     mg.GetNamespace(),
 			References:    mg.Spec.ForProvider.CustomClusterParameters.CustomBrokerNodeGroupInfo.ClientSubnetRefs,
 			Selector:      mg.Spec.ForProvider.CustomClusterParameters.CustomBrokerNodeGroupInfo.ClientSubnetSelector,
 			To: reference.To{
@@ -56,6 +57,7 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 		mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 			CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomClusterParameters.CustomBrokerNodeGroupInfo.SecurityGroups),
 			Extract:       reference.ExternalName(),
+			Namespace:     mg.GetNamespace(),
 			References:    mg.Spec.ForProvider.CustomClusterParameters.CustomBrokerNodeGroupInfo.SecurityGroupRefs,
 			Selector:      mg.Spec.ForProvider.CustomClusterParameters.CustomBrokerNodeGroupInfo.SecurityGroupSelector,
 			To: reference.To{
@@ -74,6 +76,7 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomClusterParameters.CustomConfigurationInfo.ARN),
 			Extract:      ConfugurationARN(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.CustomClusterParameters.CustomConfigurationInfo.ARNRef,
 			Selector:     mg.Spec.ForProvider.CustomClusterParameters.CustomConfigurationInfo.ARNSelector,
 			To: reference.To{

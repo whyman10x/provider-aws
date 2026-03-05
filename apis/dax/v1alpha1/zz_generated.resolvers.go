@@ -23,7 +23,7 @@ import (
 	v1beta11 "github.com/crossplane-contrib/provider-aws/apis/ec2/v1beta1"
 	v1beta1 "github.com/crossplane-contrib/provider-aws/apis/iam/v1beta1"
 	v1beta12 "github.com/crossplane-contrib/provider-aws/apis/sns/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -39,6 +39,7 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomClusterParameters.IAMRoleARN),
 		Extract:      v1beta1.RoleARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomClusterParameters.IAMRoleARNRef,
 		Selector:     mg.Spec.ForProvider.CustomClusterParameters.IAMRoleARNSelector,
 		To: reference.To{
@@ -55,6 +56,7 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomClusterParameters.ParameterGroupName),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomClusterParameters.ParameterGroupNameRef,
 		Selector:     mg.Spec.ForProvider.CustomClusterParameters.ParameterGroupNameSelector,
 		To: reference.To{
@@ -71,6 +73,7 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomClusterParameters.SubnetGroupName),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomClusterParameters.SubnetGroupNameRef,
 		Selector:     mg.Spec.ForProvider.CustomClusterParameters.SubnetGroupNameSelector,
 		To: reference.To{
@@ -87,6 +90,7 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomClusterParameters.SecurityGroupIDs),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomClusterParameters.SecurityGroupIDRefs,
 		Selector:      mg.Spec.ForProvider.CustomClusterParameters.SecurityGroupIDSelector,
 		To: reference.To{
@@ -103,6 +107,7 @@ func (mg *Cluster) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomClusterParameters.NotificationTopicARN),
 		Extract:      v1beta12.SNSTopicARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomClusterParameters.NotificationTopicARNRef,
 		Selector:     mg.Spec.ForProvider.CustomClusterParameters.NotificationTopicARNSelector,
 		To: reference.To{
@@ -129,6 +134,7 @@ func (mg *SubnetGroup) ResolveReferences(ctx context.Context, c client.Reader) e
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomSubnetGroupParameters.SubnetIds),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomSubnetGroupParameters.SubnetIDRefs,
 		Selector:      mg.Spec.ForProvider.CustomSubnetGroupParameters.SubnetIDSelector,
 		To: reference.To{

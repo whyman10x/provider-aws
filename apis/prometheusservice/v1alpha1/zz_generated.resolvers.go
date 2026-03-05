@@ -20,7 +20,7 @@ package v1alpha1
 
 import (
 	"context"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -35,6 +35,7 @@ func (mg *AlertManagerDefinition) ResolveReferences(ctx context.Context, c clien
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomAlertManagerDefinitionParameters.WorkspaceID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomAlertManagerDefinitionParameters.WorkspaceIDRef,
 		Selector:     mg.Spec.ForProvider.CustomAlertManagerDefinitionParameters.WorkspaceIDSelector,
 		To: reference.To{
@@ -61,6 +62,7 @@ func (mg *RuleGroupsNamespace) ResolveReferences(ctx context.Context, c client.R
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomRuleGroupsNamespaceParameters.WorkspaceID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomRuleGroupsNamespaceParameters.WorkspaceIDRef,
 		Selector:     mg.Spec.ForProvider.CustomRuleGroupsNamespaceParameters.WorkspaceIDSelector,
 		To: reference.To{

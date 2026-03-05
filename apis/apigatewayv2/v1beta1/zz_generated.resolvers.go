@@ -21,7 +21,7 @@ package v1beta1
 import (
 	"context"
 	v1beta1 "github.com/crossplane-contrib/provider-aws/apis/ec2/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -36,6 +36,7 @@ func (mg *VPCLink) ResolveReferences(ctx context.Context, c client.Reader) error
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: mg.Spec.ForProvider.CustomVPCLinkParameters.SecurityGroupIDs,
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomVPCLinkParameters.SecurityGroupIDRefs,
 		Selector:      mg.Spec.ForProvider.CustomVPCLinkParameters.SecurityGroupIDSelector,
 		To: reference.To{
@@ -52,6 +53,7 @@ func (mg *VPCLink) ResolveReferences(ctx context.Context, c client.Reader) error
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: mg.Spec.ForProvider.CustomVPCLinkParameters.SubnetIDs,
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomVPCLinkParameters.SubnetIDRefs,
 		Selector:      mg.Spec.ForProvider.CustomVPCLinkParameters.SubnetIDSelector,
 		To: reference.To{

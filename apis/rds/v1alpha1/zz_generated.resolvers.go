@@ -21,7 +21,7 @@ package v1alpha1
 import (
 	"context"
 	v1beta1 "github.com/crossplane-contrib/provider-aws/apis/iam/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -36,6 +36,7 @@ func (mg *DBInstanceRoleAssociation) ResolveReferences(ctx context.Context, c cl
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomDBInstanceRoleAssociationParameters.DBInstanceIdentifier),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomDBInstanceRoleAssociationParameters.DBInstanceIdentifierRef,
 		Selector:     mg.Spec.ForProvider.CustomDBInstanceRoleAssociationParameters.DBInstanceIdentifierSelector,
 		To: reference.To{
@@ -52,6 +53,7 @@ func (mg *DBInstanceRoleAssociation) ResolveReferences(ctx context.Context, c cl
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomDBInstanceRoleAssociationParameters.RoleARN),
 		Extract:      v1beta1.RoleARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomDBInstanceRoleAssociationParameters.RoleARNRef,
 		Selector:     mg.Spec.ForProvider.CustomDBInstanceRoleAssociationParameters.RoleARNSelector,
 		To: reference.To{

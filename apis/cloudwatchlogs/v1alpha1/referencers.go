@@ -14,8 +14,8 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"github.com/crossplane/crossplane-runtime/pkg/reference"
-	resource "github.com/crossplane/crossplane-runtime/pkg/resource"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/reference"
+	resource "github.com/crossplane/crossplane-runtime/v2/pkg/resource"
 )
 
 // LogGroupARN returns the status.atProvider.ARN of a LogGroup.

@@ -21,7 +21,7 @@ package v1alpha1
 import (
 	"context"
 	v1beta1 "github.com/crossplane-contrib/provider-aws/apis/iam/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -36,6 +36,7 @@ func (mg *Group) ResolveReferences(ctx context.Context, c client.Reader) error {
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomGroupParameters.RoleARN),
 		Extract:      v1beta1.RoleARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomGroupParameters.RoleARNRef,
 		Selector:     mg.Spec.ForProvider.CustomGroupParameters.RoleARNSelector,
 		To: reference.To{
@@ -52,6 +53,7 @@ func (mg *Group) ResolveReferences(ctx context.Context, c client.Reader) error {
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomGroupParameters.UserPoolID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomGroupParameters.UserPoolIDRef,
 		Selector:     mg.Spec.ForProvider.CustomGroupParameters.UserPoolIDSelector,
 		To: reference.To{
@@ -78,6 +80,7 @@ func (mg *IdentityProvider) ResolveReferences(ctx context.Context, c client.Read
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomIdentityProviderParameters.UserPoolID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomIdentityProviderParameters.UserPoolIDRef,
 		Selector:     mg.Spec.ForProvider.CustomIdentityProviderParameters.UserPoolIDSelector,
 		To: reference.To{
@@ -104,6 +107,7 @@ func (mg *ResourceServer) ResolveReferences(ctx context.Context, c client.Reader
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomResourceServerParameters.UserPoolID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomResourceServerParameters.UserPoolIDRef,
 		Selector:     mg.Spec.ForProvider.CustomResourceServerParameters.UserPoolIDSelector,
 		To: reference.To{
@@ -130,6 +134,7 @@ func (mg *UserPoolClient) ResolveReferences(ctx context.Context, c client.Reader
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomUserPoolClientParameters.UserPoolID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomUserPoolClientParameters.UserPoolIDRef,
 		Selector:     mg.Spec.ForProvider.CustomUserPoolClientParameters.UserPoolIDSelector,
 		To: reference.To{
@@ -156,6 +161,7 @@ func (mg *UserPoolDomain) ResolveReferences(ctx context.Context, c client.Reader
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomUserPoolDomainParameters.UserPoolID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomUserPoolDomainParameters.UserPoolIDRef,
 		Selector:     mg.Spec.ForProvider.CustomUserPoolDomainParameters.UserPoolIDSelector,
 		To: reference.To{

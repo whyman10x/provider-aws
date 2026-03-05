@@ -21,7 +21,7 @@ package v1beta1
 import (
 	"context"
 	v1beta1 "github.com/crossplane-contrib/provider-aws/apis/acmpca/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -36,6 +36,7 @@ func (mg *Certificate) ResolveReferences(ctx context.Context, c client.Reader) e
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CertificateAuthorityARN),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CertificateAuthorityARNRef,
 		Selector:     mg.Spec.ForProvider.CertificateAuthorityARNSelector,
 		To: reference.To{

@@ -20,7 +20,7 @@ package v1alpha1
 
 import (
 	"context"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -35,6 +35,7 @@ func (mg *Authorizer) ResolveReferences(ctx context.Context, c client.Reader) er
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomAuthorizerParameters.RestAPIID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomAuthorizerParameters.RestAPIIDRef,
 		Selector:     mg.Spec.ForProvider.CustomAuthorizerParameters.RestAPIIDSelector,
 		To: reference.To{
@@ -61,6 +62,7 @@ func (mg *BasePathMapping) ResolveReferences(ctx context.Context, c client.Reade
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomBasePathMappingParameters.RestAPIID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomBasePathMappingParameters.RestAPIIDRef,
 		Selector:     mg.Spec.ForProvider.CustomBasePathMappingParameters.RestAPIIDSelector,
 		To: reference.To{
@@ -87,6 +89,7 @@ func (mg *Deployment) ResolveReferences(ctx context.Context, c client.Reader) er
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomDeploymentParameters.RestAPIID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomDeploymentParameters.RestAPIIDRef,
 		Selector:     mg.Spec.ForProvider.CustomDeploymentParameters.RestAPIIDSelector,
 		To: reference.To{
@@ -113,6 +116,7 @@ func (mg *DocumentationPart) ResolveReferences(ctx context.Context, c client.Rea
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomDocumentationPartParameters.RestAPIID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomDocumentationPartParameters.RestAPIIDRef,
 		Selector:     mg.Spec.ForProvider.CustomDocumentationPartParameters.RestAPIIDSelector,
 		To: reference.To{
@@ -139,6 +143,7 @@ func (mg *DocumentationVersion) ResolveReferences(ctx context.Context, c client.
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomDocumentationVersionParameters.RestAPIID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomDocumentationVersionParameters.RestAPIIDRef,
 		Selector:     mg.Spec.ForProvider.CustomDocumentationVersionParameters.RestAPIIDSelector,
 		To: reference.To{
@@ -165,6 +170,7 @@ func (mg *GatewayResponse) ResolveReferences(ctx context.Context, c client.Reade
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomGatewayResponseParameters.RestAPIID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomGatewayResponseParameters.RestAPIIDRef,
 		Selector:     mg.Spec.ForProvider.CustomGatewayResponseParameters.RestAPIIDSelector,
 		To: reference.To{
@@ -191,6 +197,7 @@ func (mg *Integration) ResolveReferences(ctx context.Context, c client.Reader) e
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomIntegrationParameters.RestAPIID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomIntegrationParameters.RestAPIIDRef,
 		Selector:     mg.Spec.ForProvider.CustomIntegrationParameters.RestAPIIDSelector,
 		To: reference.To{
@@ -207,6 +214,7 @@ func (mg *Integration) ResolveReferences(ctx context.Context, c client.Reader) e
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomIntegrationParameters.ResourceID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomIntegrationParameters.ResourceIDRef,
 		Selector:     mg.Spec.ForProvider.CustomIntegrationParameters.ResourceIDSelector,
 		To: reference.To{
@@ -233,6 +241,7 @@ func (mg *IntegrationResponse) ResolveReferences(ctx context.Context, c client.R
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomIntegrationResponseParameters.RestAPIID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomIntegrationResponseParameters.RestAPIIDRef,
 		Selector:     mg.Spec.ForProvider.CustomIntegrationResponseParameters.RestAPIIDSelector,
 		To: reference.To{
@@ -249,6 +258,7 @@ func (mg *IntegrationResponse) ResolveReferences(ctx context.Context, c client.R
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomIntegrationResponseParameters.ResourceID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomIntegrationResponseParameters.ResourceIDRef,
 		Selector:     mg.Spec.ForProvider.CustomIntegrationResponseParameters.ResourceIDSelector,
 		To: reference.To{
@@ -275,6 +285,7 @@ func (mg *Method) ResolveReferences(ctx context.Context, c client.Reader) error 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomMethodParameters.RestAPIID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomMethodParameters.RestAPIIDRef,
 		Selector:     mg.Spec.ForProvider.CustomMethodParameters.RestAPIIDSelector,
 		To: reference.To{
@@ -291,6 +302,7 @@ func (mg *Method) ResolveReferences(ctx context.Context, c client.Reader) error 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomMethodParameters.AuthorizerID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomMethodParameters.AuthorizerIDRef,
 		Selector:     mg.Spec.ForProvider.CustomMethodParameters.AuthorizerIDSelector,
 		To: reference.To{
@@ -307,6 +319,7 @@ func (mg *Method) ResolveReferences(ctx context.Context, c client.Reader) error 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomMethodParameters.ResourceID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomMethodParameters.ResourceIDRef,
 		Selector:     mg.Spec.ForProvider.CustomMethodParameters.ResourceIDSelector,
 		To: reference.To{
@@ -323,6 +336,7 @@ func (mg *Method) ResolveReferences(ctx context.Context, c client.Reader) error 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomMethodParameters.RequestValidatorID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomMethodParameters.RequestValidatorIDRef,
 		Selector:     mg.Spec.ForProvider.CustomMethodParameters.RequestValidatorIDSelector,
 		To: reference.To{
@@ -349,6 +363,7 @@ func (mg *MethodResponse) ResolveReferences(ctx context.Context, c client.Reader
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomMethodResponseParameters.RestAPIID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomMethodResponseParameters.RestAPIIDRef,
 		Selector:     mg.Spec.ForProvider.CustomMethodResponseParameters.RestAPIIDSelector,
 		To: reference.To{
@@ -365,6 +380,7 @@ func (mg *MethodResponse) ResolveReferences(ctx context.Context, c client.Reader
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomMethodResponseParameters.ResourceID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomMethodResponseParameters.ResourceIDRef,
 		Selector:     mg.Spec.ForProvider.CustomMethodResponseParameters.ResourceIDSelector,
 		To: reference.To{
@@ -391,6 +407,7 @@ func (mg *Model) ResolveReferences(ctx context.Context, c client.Reader) error {
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomModelParameters.RestAPIID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomModelParameters.RestAPIIDRef,
 		Selector:     mg.Spec.ForProvider.CustomModelParameters.RestAPIIDSelector,
 		To: reference.To{
@@ -417,6 +434,7 @@ func (mg *RequestValidator) ResolveReferences(ctx context.Context, c client.Read
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomRequestValidatorParameters.RestAPIID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomRequestValidatorParameters.RestAPIIDRef,
 		Selector:     mg.Spec.ForProvider.CustomRequestValidatorParameters.RestAPIIDSelector,
 		To: reference.To{
@@ -443,6 +461,7 @@ func (mg *Resource) ResolveReferences(ctx context.Context, c client.Reader) erro
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomResourceParameters.RestAPIID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomResourceParameters.RestAPIIDRef,
 		Selector:     mg.Spec.ForProvider.CustomResourceParameters.RestAPIIDSelector,
 		To: reference.To{
@@ -459,6 +478,7 @@ func (mg *Resource) ResolveReferences(ctx context.Context, c client.Reader) erro
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomResourceParameters.ParentResourceID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomResourceParameters.ParentResourceIDRef,
 		Selector:     mg.Spec.ForProvider.CustomResourceParameters.ParentResourceIDSelector,
 		To: reference.To{
@@ -485,6 +505,7 @@ func (mg *Stage) ResolveReferences(ctx context.Context, c client.Reader) error {
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomStageParameters.RestAPIID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomStageParameters.RestAPIIDRef,
 		Selector:     mg.Spec.ForProvider.CustomStageParameters.RestAPIIDSelector,
 		To: reference.To{
@@ -501,6 +522,7 @@ func (mg *Stage) ResolveReferences(ctx context.Context, c client.Reader) error {
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomStageParameters.DeploymentID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomStageParameters.DeploymentIDRef,
 		Selector:     mg.Spec.ForProvider.CustomStageParameters.DeploymentIDSelector,
 		To: reference.To{
@@ -518,6 +540,7 @@ func (mg *Stage) ResolveReferences(ctx context.Context, c client.Reader) error {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomStageParameters.CanarySettings.DeploymentID),
 			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.CustomStageParameters.CanarySettings.DeploymentIDRef,
 			Selector:     mg.Spec.ForProvider.CustomStageParameters.CanarySettings.DeploymentIDSelector,
 			To: reference.To{
@@ -547,6 +570,7 @@ func (mg *UsagePlan) ResolveReferences(ctx context.Context, c client.Reader) err
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomUsagePlanParameters.APIStages[i4].RestAPIID),
 			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.CustomUsagePlanParameters.APIStages[i4].RestAPIIDRef,
 			Selector:     mg.Spec.ForProvider.CustomUsagePlanParameters.APIStages[i4].RestAPIIDSelector,
 			To: reference.To{
@@ -575,6 +599,7 @@ func (mg *UsagePlanKey) ResolveReferences(ctx context.Context, c client.Reader) 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomUsagePlanKeyParameters.UsagePlanID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomUsagePlanKeyParameters.UsagePlanIDRef,
 		Selector:     mg.Spec.ForProvider.CustomUsagePlanKeyParameters.UsagePlanIDSelector,
 		To: reference.To{

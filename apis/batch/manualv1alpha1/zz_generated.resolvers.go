@@ -23,7 +23,7 @@ import (
 	v1alpha1 "github.com/crossplane-contrib/provider-aws/apis/batch/v1alpha1"
 	v1alpha11 "github.com/crossplane-contrib/provider-aws/apis/efs/v1alpha1"
 	v1beta1 "github.com/crossplane-contrib/provider-aws/apis/iam/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -39,6 +39,7 @@ func (mg *Job) ResolveReferences(ctx context.Context, c client.Reader) error {
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DependsOn[i3].JobID),
 			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.DependsOn[i3].JobIDRef,
 			Selector:     mg.Spec.ForProvider.DependsOn[i3].JobIDSelector,
 			To: reference.To{
@@ -56,6 +57,7 @@ func (mg *Job) ResolveReferences(ctx context.Context, c client.Reader) error {
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: mg.Spec.ForProvider.JobDefinition,
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.JobDefinitionRef,
 		Selector:     mg.Spec.ForProvider.JobDefinitionSelector,
 		To: reference.To{
@@ -72,6 +74,7 @@ func (mg *Job) ResolveReferences(ctx context.Context, c client.Reader) error {
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: mg.Spec.ForProvider.JobQueue,
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.JobQueueRef,
 		Selector:     mg.Spec.ForProvider.JobQueueSelector,
 		To: reference.To{
@@ -99,6 +102,7 @@ func (mg *JobDefinition) ResolveReferences(ctx context.Context, c client.Reader)
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ContainerProperties.ExecutionRoleArn),
 			Extract:      v1beta1.RoleARN(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.ContainerProperties.ExecutionRoleARNRef,
 			Selector:     mg.Spec.ForProvider.ContainerProperties.ExecutionRoleARNSelector,
 			To: reference.To{
@@ -117,6 +121,7 @@ func (mg *JobDefinition) ResolveReferences(ctx context.Context, c client.Reader)
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ContainerProperties.JobRoleArn),
 			Extract:      v1beta1.RoleARN(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.ContainerProperties.JobRoleARNRef,
 			Selector:     mg.Spec.ForProvider.ContainerProperties.JobRoleARNSelector,
 			To: reference.To{
@@ -138,6 +143,7 @@ func (mg *JobDefinition) ResolveReferences(ctx context.Context, c client.Reader)
 					rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 						CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.ContainerProperties.Volumes[i4].EfsVolumeConfiguration.AuthorizationConfig.AccessPointID),
 						Extract:      reference.ExternalName(),
+						Namespace:    mg.GetNamespace(),
 						Reference:    mg.Spec.ForProvider.ContainerProperties.Volumes[i4].EfsVolumeConfiguration.AuthorizationConfig.AccessPointIDRef,
 						Selector:     mg.Spec.ForProvider.ContainerProperties.Volumes[i4].EfsVolumeConfiguration.AuthorizationConfig.AccessPointIDSelector,
 						To: reference.To{
@@ -161,6 +167,7 @@ func (mg *JobDefinition) ResolveReferences(ctx context.Context, c client.Reader)
 				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 					CurrentValue: mg.Spec.ForProvider.ContainerProperties.Volumes[i4].EfsVolumeConfiguration.FileSystemID,
 					Extract:      reference.ExternalName(),
+					Namespace:    mg.GetNamespace(),
 					Reference:    mg.Spec.ForProvider.ContainerProperties.Volumes[i4].EfsVolumeConfiguration.FileSystemIDRef,
 					Selector:     mg.Spec.ForProvider.ContainerProperties.Volumes[i4].EfsVolumeConfiguration.FileSystemIDSelector,
 					To: reference.To{
@@ -183,6 +190,7 @@ func (mg *JobDefinition) ResolveReferences(ctx context.Context, c client.Reader)
 				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NodeProperties.NodeRangeProperties[i4].Container.ExecutionRoleArn),
 					Extract:      v1beta1.RoleARN(),
+					Namespace:    mg.GetNamespace(),
 					Reference:    mg.Spec.ForProvider.NodeProperties.NodeRangeProperties[i4].Container.ExecutionRoleARNRef,
 					Selector:     mg.Spec.ForProvider.NodeProperties.NodeRangeProperties[i4].Container.ExecutionRoleARNSelector,
 					To: reference.To{
@@ -205,6 +213,7 @@ func (mg *JobDefinition) ResolveReferences(ctx context.Context, c client.Reader)
 				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NodeProperties.NodeRangeProperties[i4].Container.JobRoleArn),
 					Extract:      v1beta1.RoleARN(),
+					Namespace:    mg.GetNamespace(),
 					Reference:    mg.Spec.ForProvider.NodeProperties.NodeRangeProperties[i4].Container.JobRoleARNRef,
 					Selector:     mg.Spec.ForProvider.NodeProperties.NodeRangeProperties[i4].Container.JobRoleARNSelector,
 					To: reference.To{
@@ -230,6 +239,7 @@ func (mg *JobDefinition) ResolveReferences(ctx context.Context, c client.Reader)
 							rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 								CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NodeProperties.NodeRangeProperties[i4].Container.Volumes[i6].EfsVolumeConfiguration.AuthorizationConfig.AccessPointID),
 								Extract:      reference.ExternalName(),
+								Namespace:    mg.GetNamespace(),
 								Reference:    mg.Spec.ForProvider.NodeProperties.NodeRangeProperties[i4].Container.Volumes[i6].EfsVolumeConfiguration.AuthorizationConfig.AccessPointIDRef,
 								Selector:     mg.Spec.ForProvider.NodeProperties.NodeRangeProperties[i4].Container.Volumes[i6].EfsVolumeConfiguration.AuthorizationConfig.AccessPointIDSelector,
 								To: reference.To{
@@ -257,6 +267,7 @@ func (mg *JobDefinition) ResolveReferences(ctx context.Context, c client.Reader)
 						rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 							CurrentValue: mg.Spec.ForProvider.NodeProperties.NodeRangeProperties[i4].Container.Volumes[i6].EfsVolumeConfiguration.FileSystemID,
 							Extract:      reference.ExternalName(),
+							Namespace:    mg.GetNamespace(),
 							Reference:    mg.Spec.ForProvider.NodeProperties.NodeRangeProperties[i4].Container.Volumes[i6].EfsVolumeConfiguration.FileSystemIDRef,
 							Selector:     mg.Spec.ForProvider.NodeProperties.NodeRangeProperties[i4].Container.Volumes[i6].EfsVolumeConfiguration.FileSystemIDSelector,
 							To: reference.To{

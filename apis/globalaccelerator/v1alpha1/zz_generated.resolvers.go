@@ -20,7 +20,7 @@ package v1alpha1
 
 import (
 	"context"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -35,6 +35,7 @@ func (mg *EndpointGroup) ResolveReferences(ctx context.Context, c client.Reader)
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomEndpointGroupParameters.ListenerARN),
 		Extract:      ListenerARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomEndpointGroupParameters.ListenerArnRef,
 		Selector:     mg.Spec.ForProvider.CustomEndpointGroupParameters.ListenerArnSelector,
 		To: reference.To{
@@ -61,6 +62,7 @@ func (mg *Listener) ResolveReferences(ctx context.Context, c client.Reader) erro
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomListenerParameters.AcceleratorArn),
 		Extract:      AcceleratorARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomListenerParameters.AcceleratorArnRef,
 		Selector:     mg.Spec.ForProvider.CustomListenerParameters.AcceleratorArnSelector,
 		To: reference.To{

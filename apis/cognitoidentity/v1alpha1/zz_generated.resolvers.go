@@ -22,7 +22,7 @@ import (
 	"context"
 	v1alpha1 "github.com/crossplane-contrib/provider-aws/apis/cognitoidentityprovider/v1alpha1"
 	v1beta1 "github.com/crossplane-contrib/provider-aws/apis/iam/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -38,6 +38,7 @@ func (mg *IdentityPool) ResolveReferences(ctx context.Context, c client.Reader) 
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomIdentityPoolParameters.OpenIDConnectProviderARNs),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomIdentityPoolParameters.OpenIDConnectProviderARNRefs,
 		Selector:      mg.Spec.ForProvider.CustomIdentityPoolParameters.OpenIDConnectProviderARNSelector,
 		To: reference.To{
@@ -55,6 +56,7 @@ func (mg *IdentityPool) ResolveReferences(ctx context.Context, c client.Reader) 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomIdentityPoolParameters.CognitoIdentityProviders[i4].ClientID),
 			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.CustomIdentityPoolParameters.CognitoIdentityProviders[i4].ClientIDRef,
 			Selector:     mg.Spec.ForProvider.CustomIdentityPoolParameters.CognitoIdentityProviders[i4].ClientIDSelector,
 			To: reference.To{
@@ -73,6 +75,7 @@ func (mg *IdentityPool) ResolveReferences(ctx context.Context, c client.Reader) 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomIdentityPoolParameters.CognitoIdentityProviders[i4].ProviderName),
 			Extract:      v1alpha1.UserPoolName(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.CustomIdentityPoolParameters.CognitoIdentityProviders[i4].ProviderNameRef,
 			Selector:     mg.Spec.ForProvider.CustomIdentityPoolParameters.CognitoIdentityProviders[i4].ProviderNameSelector,
 			To: reference.To{
@@ -91,6 +94,7 @@ func (mg *IdentityPool) ResolveReferences(ctx context.Context, c client.Reader) 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Status.AtProvider.CognitoIdentityProviders[i3].ClientID),
 			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Status.AtProvider.CognitoIdentityProviders[i3].ClientIDRef,
 			Selector:     mg.Status.AtProvider.CognitoIdentityProviders[i3].ClientIDSelector,
 			To: reference.To{
@@ -109,6 +113,7 @@ func (mg *IdentityPool) ResolveReferences(ctx context.Context, c client.Reader) 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Status.AtProvider.CognitoIdentityProviders[i3].ProviderName),
 			Extract:      v1alpha1.UserPoolName(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Status.AtProvider.CognitoIdentityProviders[i3].ProviderNameRef,
 			Selector:     mg.Status.AtProvider.CognitoIdentityProviders[i3].ProviderNameSelector,
 			To: reference.To{

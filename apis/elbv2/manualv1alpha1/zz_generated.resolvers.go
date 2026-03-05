@@ -22,7 +22,7 @@ import (
 	"context"
 	v1alpha1 "github.com/crossplane-contrib/provider-aws/apis/elbv2/v1alpha1"
 	v1beta1 "github.com/crossplane-contrib/provider-aws/apis/lambda/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -37,6 +37,7 @@ func (mg *Target) ResolveReferences(ctx context.Context, c client.Reader) error 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.TargetGroupARN),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.TargetGroupARNRef,
 		Selector:     mg.Spec.ForProvider.TargetGroupARNSelector,
 		To: reference.To{
@@ -53,6 +54,7 @@ func (mg *Target) ResolveReferences(ctx context.Context, c client.Reader) error 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.LambdaARN),
 		Extract:      v1beta1.FunctionARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.LambdaARNRef,
 		Selector:     mg.Spec.ForProvider.LambdaARNSelector,
 		To: reference.To{

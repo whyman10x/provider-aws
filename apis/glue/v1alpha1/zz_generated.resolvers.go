@@ -24,7 +24,7 @@ import (
 	v1beta11 "github.com/crossplane-contrib/provider-aws/apis/iam/v1beta1"
 	v1alpha1 "github.com/crossplane-contrib/provider-aws/apis/kms/v1alpha1"
 	v1beta12 "github.com/crossplane-contrib/provider-aws/apis/sqs/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -42,6 +42,7 @@ func (mg *Connection) ResolveReferences(ctx context.Context, c client.Reader) er
 			mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 				CurrentValues: mg.Spec.ForProvider.CustomConnectionParameters.CustomConnectionInput.CustomPhysicalConnectionRequirements.SecurityGroupIDList,
 				Extract:       reference.ExternalName(),
+				Namespace:     mg.GetNamespace(),
 				References:    mg.Spec.ForProvider.CustomConnectionParameters.CustomConnectionInput.CustomPhysicalConnectionRequirements.SecurityGroupIDRefs,
 				Selector:      mg.Spec.ForProvider.CustomConnectionParameters.CustomConnectionInput.CustomPhysicalConnectionRequirements.SecurityGroupIDSelector,
 				To: reference.To{
@@ -62,6 +63,7 @@ func (mg *Connection) ResolveReferences(ctx context.Context, c client.Reader) er
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomConnectionParameters.CustomConnectionInput.CustomPhysicalConnectionRequirements.SubnetID),
 				Extract:      reference.ExternalName(),
+				Namespace:    mg.GetNamespace(),
 				Reference:    mg.Spec.ForProvider.CustomConnectionParameters.CustomConnectionInput.CustomPhysicalConnectionRequirements.SubnetIDRef,
 				Selector:     mg.Spec.ForProvider.CustomConnectionParameters.CustomConnectionInput.CustomPhysicalConnectionRequirements.SubnetIDSelector,
 				To: reference.To{
@@ -92,6 +94,7 @@ func (mg *Crawler) ResolveReferences(ctx context.Context, c client.Reader) error
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomCrawlerParameters.Classifiers),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomCrawlerParameters.ClassifierRefs,
 		Selector:      mg.Spec.ForProvider.CustomCrawlerParameters.ClassifierSelector,
 		To: reference.To{
@@ -108,6 +111,7 @@ func (mg *Crawler) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomCrawlerParameters.CrawlerSecurityConfiguration),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomCrawlerParameters.CrawlerSecurityConfigurationRef,
 		Selector:     mg.Spec.ForProvider.CustomCrawlerParameters.CrawlerSecurityConfigurationSelector,
 		To: reference.To{
@@ -124,6 +128,7 @@ func (mg *Crawler) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomCrawlerParameters.DatabaseName),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomCrawlerParameters.DatabaseNameRef,
 		Selector:     mg.Spec.ForProvider.CustomCrawlerParameters.DatabaseNameSelector,
 		To: reference.To{
@@ -140,6 +145,7 @@ func (mg *Crawler) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: mg.Spec.ForProvider.CustomCrawlerParameters.Role,
 		Extract:      v1beta11.RoleARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomCrawlerParameters.RoleRef,
 		Selector:     mg.Spec.ForProvider.CustomCrawlerParameters.RoleSelector,
 		To: reference.To{
@@ -157,6 +163,7 @@ func (mg *Crawler) ResolveReferences(ctx context.Context, c client.Reader) error
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: mg.Spec.ForProvider.CustomCrawlerParameters.Targets.CatalogTargets[i5].DatabaseName,
 			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.CustomCrawlerParameters.Targets.CatalogTargets[i5].DatabaseNameRef,
 			Selector:     mg.Spec.ForProvider.CustomCrawlerParameters.Targets.CatalogTargets[i5].DatabaseNameSelector,
 			To: reference.To{
@@ -175,6 +182,7 @@ func (mg *Crawler) ResolveReferences(ctx context.Context, c client.Reader) error
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomCrawlerParameters.Targets.JDBCTargets[i5].ConnectionName),
 			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.CustomCrawlerParameters.Targets.JDBCTargets[i5].ConnectionNameRef,
 			Selector:     mg.Spec.ForProvider.CustomCrawlerParameters.Targets.JDBCTargets[i5].ConnectionNameSelector,
 			To: reference.To{
@@ -193,6 +201,7 @@ func (mg *Crawler) ResolveReferences(ctx context.Context, c client.Reader) error
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomCrawlerParameters.Targets.MongoDBTargets[i5].ConnectionName),
 			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.CustomCrawlerParameters.Targets.MongoDBTargets[i5].ConnectionNameRef,
 			Selector:     mg.Spec.ForProvider.CustomCrawlerParameters.Targets.MongoDBTargets[i5].ConnectionNameSelector,
 			To: reference.To{
@@ -211,6 +220,7 @@ func (mg *Crawler) ResolveReferences(ctx context.Context, c client.Reader) error
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomCrawlerParameters.Targets.S3Targets[i5].ConnectionName),
 			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.CustomCrawlerParameters.Targets.S3Targets[i5].ConnectionNameRef,
 			Selector:     mg.Spec.ForProvider.CustomCrawlerParameters.Targets.S3Targets[i5].ConnectionNameSelector,
 			To: reference.To{
@@ -229,6 +239,7 @@ func (mg *Crawler) ResolveReferences(ctx context.Context, c client.Reader) error
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomCrawlerParameters.Targets.S3Targets[i5].DlqEventQueueARN),
 			Extract:      v1beta12.QueueARN(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.CustomCrawlerParameters.Targets.S3Targets[i5].DlqEventQueueARNRef,
 			Selector:     mg.Spec.ForProvider.CustomCrawlerParameters.Targets.S3Targets[i5].DlqEventQueueARNSelector,
 			To: reference.To{
@@ -247,6 +258,7 @@ func (mg *Crawler) ResolveReferences(ctx context.Context, c client.Reader) error
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomCrawlerParameters.Targets.S3Targets[i5].EventQueueARN),
 			Extract:      v1beta12.QueueARN(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.CustomCrawlerParameters.Targets.S3Targets[i5].EventQueueARNRef,
 			Selector:     mg.Spec.ForProvider.CustomCrawlerParameters.Targets.S3Targets[i5].EventQueueARNSelector,
 			To: reference.To{
@@ -276,6 +288,7 @@ func (mg *Job) ResolveReferences(ctx context.Context, c client.Reader) error {
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomJobParameters.Connections),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomJobParameters.ConnectionRefs,
 		Selector:      mg.Spec.ForProvider.CustomJobParameters.ConnectionSelector,
 		To: reference.To{
@@ -292,6 +305,7 @@ func (mg *Job) ResolveReferences(ctx context.Context, c client.Reader) error {
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: mg.Spec.ForProvider.CustomJobParameters.Role,
 		Extract:      v1beta11.RoleARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomJobParameters.RoleRef,
 		Selector:     mg.Spec.ForProvider.CustomJobParameters.RoleSelector,
 		To: reference.To{
@@ -308,6 +322,7 @@ func (mg *Job) ResolveReferences(ctx context.Context, c client.Reader) error {
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomJobParameters.SecurityConfiguration),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomJobParameters.SecurityConfigurationRef,
 		Selector:     mg.Spec.ForProvider.CustomJobParameters.SecurityConfigurationSelector,
 		To: reference.To{
@@ -336,6 +351,7 @@ func (mg *SecurityConfiguration) ResolveReferences(ctx context.Context, c client
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomSecurityConfigurationParameters.CustomEncryptionConfiguration.CustomCloudWatchEncryption.KMSKeyARN),
 				Extract:      v1alpha1.KMSKeyARN(),
+				Namespace:    mg.GetNamespace(),
 				Reference:    mg.Spec.ForProvider.CustomSecurityConfigurationParameters.CustomEncryptionConfiguration.CustomCloudWatchEncryption.KMSKeyARNRef,
 				Selector:     mg.Spec.ForProvider.CustomSecurityConfigurationParameters.CustomEncryptionConfiguration.CustomCloudWatchEncryption.KMSKeyARNSelector,
 				To: reference.To{
@@ -356,6 +372,7 @@ func (mg *SecurityConfiguration) ResolveReferences(ctx context.Context, c client
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomSecurityConfigurationParameters.CustomEncryptionConfiguration.CustomJobBookmarksEncryption.KMSKeyARN),
 				Extract:      v1alpha1.KMSKeyARN(),
+				Namespace:    mg.GetNamespace(),
 				Reference:    mg.Spec.ForProvider.CustomSecurityConfigurationParameters.CustomEncryptionConfiguration.CustomJobBookmarksEncryption.KMSKeyARNRef,
 				Selector:     mg.Spec.ForProvider.CustomSecurityConfigurationParameters.CustomEncryptionConfiguration.CustomJobBookmarksEncryption.KMSKeyARNSelector,
 				To: reference.To{
@@ -376,6 +393,7 @@ func (mg *SecurityConfiguration) ResolveReferences(ctx context.Context, c client
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomSecurityConfigurationParameters.CustomEncryptionConfiguration.CustomS3Encryption[i5].KMSKeyARN),
 				Extract:      v1alpha1.KMSKeyARN(),
+				Namespace:    mg.GetNamespace(),
 				Reference:    mg.Spec.ForProvider.CustomSecurityConfigurationParameters.CustomEncryptionConfiguration.CustomS3Encryption[i5].KMSKeyARNRef,
 				Selector:     mg.Spec.ForProvider.CustomSecurityConfigurationParameters.CustomEncryptionConfiguration.CustomS3Encryption[i5].KMSKeyARNSelector,
 				To: reference.To{

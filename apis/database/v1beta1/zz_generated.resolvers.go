@@ -23,7 +23,7 @@ import (
 	v1beta1 "github.com/crossplane-contrib/provider-aws/apis/ec2/v1beta1"
 	v1beta12 "github.com/crossplane-contrib/provider-aws/apis/iam/v1beta1"
 	v1beta11 "github.com/crossplane-contrib/provider-aws/apis/s3/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -38,6 +38,7 @@ func (mg *DBSubnetGroup) ResolveReferences(ctx context.Context, c client.Reader)
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: mg.Spec.ForProvider.SubnetIDs,
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.SubnetIDRefs,
 		Selector:      mg.Spec.ForProvider.SubnetIDSelector,
 		To: reference.To{
@@ -65,6 +66,7 @@ func (mg *RDSInstance) ResolveReferences(ctx context.Context, c client.Reader) e
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DBSubnetGroupName),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.DBSubnetGroupNameRef,
 		Selector:     mg.Spec.ForProvider.DBSubnetGroupNameSelector,
 		To: reference.To{
@@ -83,6 +85,7 @@ func (mg *RDSInstance) ResolveReferences(ctx context.Context, c client.Reader) e
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RestoreFrom.S3.BucketName),
 				Extract:      reference.ExternalName(),
+				Namespace:    mg.GetNamespace(),
 				Reference:    mg.Spec.ForProvider.RestoreFrom.S3.BucketNameRef,
 				Selector:     mg.Spec.ForProvider.RestoreFrom.S3.BucketNameSelector,
 				To: reference.To{
@@ -103,6 +106,7 @@ func (mg *RDSInstance) ResolveReferences(ctx context.Context, c client.Reader) e
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.RestoreFrom.S3.IngestionRoleARN),
 				Extract:      v1beta12.RoleARN(),
+				Namespace:    mg.GetNamespace(),
 				Reference:    mg.Spec.ForProvider.RestoreFrom.S3.IngestionRoleARNRef,
 				Selector:     mg.Spec.ForProvider.RestoreFrom.S3.IngestionRoleARNSelector,
 				To: reference.To{
@@ -121,6 +125,7 @@ func (mg *RDSInstance) ResolveReferences(ctx context.Context, c client.Reader) e
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.MonitoringRoleARN),
 		Extract:      v1beta12.RoleARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.MonitoringRoleARNRef,
 		Selector:     mg.Spec.ForProvider.MonitoringRoleARNSelector,
 		To: reference.To{
@@ -137,6 +142,7 @@ func (mg *RDSInstance) ResolveReferences(ctx context.Context, c client.Reader) e
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: mg.Spec.ForProvider.VPCSecurityGroupIDs,
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.VPCSecurityGroupIDRefs,
 		Selector:      mg.Spec.ForProvider.VPCSecurityGroupIDSelector,
 		To: reference.To{
@@ -153,6 +159,7 @@ func (mg *RDSInstance) ResolveReferences(ctx context.Context, c client.Reader) e
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.DomainIAMRoleName),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.DomainIAMRoleNameRef,
 		Selector:     mg.Spec.ForProvider.DomainIAMRoleNameSelector,
 		To: reference.To{

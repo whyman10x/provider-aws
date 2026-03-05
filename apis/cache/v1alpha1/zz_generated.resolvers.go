@@ -22,7 +22,7 @@ import (
 	"context"
 	v1beta11 "github.com/crossplane-contrib/provider-aws/apis/ec2/v1beta1"
 	v1beta1 "github.com/crossplane-contrib/provider-aws/apis/sns/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -38,6 +38,7 @@ func (mg *CacheCluster) ResolveReferences(ctx context.Context, c client.Reader) 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CacheSubnetGroupName),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CacheSubnetGroupNameRef,
 		Selector:     mg.Spec.ForProvider.CacheSubnetGroupNameSelector,
 		To: reference.To{
@@ -54,6 +55,7 @@ func (mg *CacheCluster) ResolveReferences(ctx context.Context, c client.Reader) 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.NotificationTopicARN),
 		Extract:      v1beta1.SNSTopicARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.NotificationTopicARNRef,
 		Selector:     mg.Spec.ForProvider.NotificationTopicARNSelector,
 		To: reference.To{
@@ -70,6 +72,7 @@ func (mg *CacheCluster) ResolveReferences(ctx context.Context, c client.Reader) 
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: mg.Spec.ForProvider.SecurityGroupIDs,
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.SecurityGroupIDRefs,
 		Selector:      mg.Spec.ForProvider.SecurityGroupIDSelector,
 		To: reference.To{
@@ -96,6 +99,7 @@ func (mg *CacheSubnetGroup) ResolveReferences(ctx context.Context, c client.Read
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: mg.Spec.ForProvider.SubnetIDs,
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.SubnetIDRefs,
 		Selector:      mg.Spec.ForProvider.SubnetIDSelector,
 		To: reference.To{

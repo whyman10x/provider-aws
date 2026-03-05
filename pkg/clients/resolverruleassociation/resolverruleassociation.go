@@ -23,7 +23,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	route53resolver "github.com/aws/aws-sdk-go-v2/service/route53resolver"
 	route53resolvertypes "github.com/aws/aws-sdk-go-v2/service/route53resolver/types"
-	"github.com/crossplane/crossplane-runtime/pkg/meta"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/meta"
 
 	"github.com/crossplane-contrib/provider-aws/apis/route53resolver/manualv1alpha1"
 	"github.com/crossplane-contrib/provider-aws/pkg/utils/pointer"

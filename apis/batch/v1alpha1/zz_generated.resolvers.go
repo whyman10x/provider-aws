@@ -23,7 +23,7 @@ import (
 	v1beta11 "github.com/crossplane-contrib/provider-aws/apis/ec2/v1beta1"
 	v1alpha1 "github.com/crossplane-contrib/provider-aws/apis/iam/v1alpha1"
 	v1beta1 "github.com/crossplane-contrib/provider-aws/apis/iam/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -39,6 +39,7 @@ func (mg *ComputeEnvironment) ResolveReferences(ctx context.Context, c client.Re
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomComputeEnvironmentParameters.ServiceRoleARN),
 		Extract:      v1beta1.RoleARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomComputeEnvironmentParameters.ServiceRoleARNRef,
 		Selector:     mg.Spec.ForProvider.CustomComputeEnvironmentParameters.ServiceRoleARNSelector,
 		To: reference.To{
@@ -55,6 +56,7 @@ func (mg *ComputeEnvironment) ResolveReferences(ctx context.Context, c client.Re
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomComputeEnvironmentParameters.SubnetIDs),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomComputeEnvironmentParameters.SubnetIDRefs,
 		Selector:      mg.Spec.ForProvider.CustomComputeEnvironmentParameters.SubnetIDSelector,
 		To: reference.To{
@@ -71,6 +73,7 @@ func (mg *ComputeEnvironment) ResolveReferences(ctx context.Context, c client.Re
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomComputeEnvironmentParameters.SecurityGroupIDs),
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.CustomComputeEnvironmentParameters.SecurityGroupIDRefs,
 		Selector:      mg.Spec.ForProvider.CustomComputeEnvironmentParameters.SecurityGroupIDSelector,
 		To: reference.To{
@@ -87,6 +90,7 @@ func (mg *ComputeEnvironment) ResolveReferences(ctx context.Context, c client.Re
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomComputeEnvironmentParameters.InstanceRole),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomComputeEnvironmentParameters.InstanceRoleRef,
 		Selector:     mg.Spec.ForProvider.CustomComputeEnvironmentParameters.InstanceRoleSelector,
 		To: reference.To{
@@ -103,6 +107,7 @@ func (mg *ComputeEnvironment) ResolveReferences(ctx context.Context, c client.Re
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomComputeEnvironmentParameters.SpotIAMFleetRole),
 		Extract:      v1beta1.RoleARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomComputeEnvironmentParameters.SpotIAMFleetRoleRef,
 		Selector:     mg.Spec.ForProvider.CustomComputeEnvironmentParameters.SpotIAMFleetRoleSelector,
 		To: reference.To{
@@ -130,6 +135,7 @@ func (mg *JobQueue) ResolveReferences(ctx context.Context, c client.Reader) erro
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: mg.Spec.ForProvider.CustomJobQueueParameters.ComputeEnvironmentOrder[i4].ComputeEnvironment,
 			Extract:      ComputeEnvironmentARN(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.CustomJobQueueParameters.ComputeEnvironmentOrder[i4].ComputeEnvironmentRef,
 			Selector:     mg.Spec.ForProvider.CustomJobQueueParameters.ComputeEnvironmentOrder[i4].ComputeEnvironmentSelector,
 			To: reference.To{

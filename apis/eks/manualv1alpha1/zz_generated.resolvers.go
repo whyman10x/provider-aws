@@ -24,7 +24,7 @@ import (
 	v1beta12 "github.com/crossplane-contrib/provider-aws/apis/ec2/v1beta1"
 	v1beta1 "github.com/crossplane-contrib/provider-aws/apis/eks/v1beta1"
 	v1beta11 "github.com/crossplane-contrib/provider-aws/apis/iam/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -39,6 +39,7 @@ func (mg *IdentityProviderConfig) ResolveReferences(ctx context.Context, c clien
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: mg.Spec.ForProvider.ClusterName,
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.ClusterNameRef,
 		Selector:     mg.Spec.ForProvider.ClusterNameSelector,
 		To: reference.To{
@@ -66,6 +67,7 @@ func (mg *NodeGroup) ResolveReferences(ctx context.Context, c client.Reader) err
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: mg.Spec.ForProvider.ClusterName,
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.ClusterNameRef,
 		Selector:     mg.Spec.ForProvider.ClusterNameSelector,
 		To: reference.To{
@@ -83,6 +85,7 @@ func (mg *NodeGroup) ResolveReferences(ctx context.Context, c client.Reader) err
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.LaunchTemplate.Name),
 			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.LaunchTemplate.NameRef,
 			Selector:     mg.Spec.ForProvider.LaunchTemplate.NameSelector,
 			To: reference.To{
@@ -101,6 +104,7 @@ func (mg *NodeGroup) ResolveReferences(ctx context.Context, c client.Reader) err
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.LaunchTemplate.Version),
 			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.LaunchTemplate.VersionRef,
 			Selector:     mg.Spec.ForProvider.LaunchTemplate.VersionSelector,
 			To: reference.To{
@@ -118,6 +122,7 @@ func (mg *NodeGroup) ResolveReferences(ctx context.Context, c client.Reader) err
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: mg.Spec.ForProvider.NodeRole,
 		Extract:      v1beta11.RoleARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.NodeRoleRef,
 		Selector:     mg.Spec.ForProvider.NodeRoleSelector,
 		To: reference.To{
@@ -135,6 +140,7 @@ func (mg *NodeGroup) ResolveReferences(ctx context.Context, c client.Reader) err
 		mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 			CurrentValues: mg.Spec.ForProvider.RemoteAccess.SourceSecurityGroups,
 			Extract:       reference.ExternalName(),
+			Namespace:     mg.GetNamespace(),
 			References:    mg.Spec.ForProvider.RemoteAccess.SourceSecurityGroupRefs,
 			Selector:      mg.Spec.ForProvider.RemoteAccess.SourceSecurityGroupSelector,
 			To: reference.To{
@@ -152,6 +158,7 @@ func (mg *NodeGroup) ResolveReferences(ctx context.Context, c client.Reader) err
 	mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 		CurrentValues: mg.Spec.ForProvider.Subnets,
 		Extract:       reference.ExternalName(),
+		Namespace:     mg.GetNamespace(),
 		References:    mg.Spec.ForProvider.SubnetRefs,
 		Selector:      mg.Spec.ForProvider.SubnetSelector,
 		To: reference.To{

@@ -24,7 +24,7 @@ import (
 	v1alpha1 "github.com/crossplane-contrib/provider-aws/apis/ec2/v1alpha1"
 	v1beta1 "github.com/crossplane-contrib/provider-aws/apis/ec2/v1beta1"
 	v1beta12 "github.com/crossplane-contrib/provider-aws/apis/iam/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -41,6 +41,7 @@ func (mg *Server) ResolveReferences(ctx context.Context, c client.Reader) error 
 		mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 			CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomServerParameters.CustomEndpointDetails.AddressAllocationIDs),
 			Extract:       reference.ExternalName(),
+			Namespace:     mg.GetNamespace(),
 			References:    mg.Spec.ForProvider.CustomServerParameters.CustomEndpointDetails.AddressAllocationIDRefs,
 			Selector:      mg.Spec.ForProvider.CustomServerParameters.CustomEndpointDetails.AddressAllocationIDSelector,
 			To: reference.To{
@@ -59,6 +60,7 @@ func (mg *Server) ResolveReferences(ctx context.Context, c client.Reader) error 
 		mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 			CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomServerParameters.CustomEndpointDetails.SecurityGroupIDs),
 			Extract:       reference.ExternalName(),
+			Namespace:     mg.GetNamespace(),
 			References:    mg.Spec.ForProvider.CustomServerParameters.CustomEndpointDetails.SecurityGroupIDRefs,
 			Selector:      mg.Spec.ForProvider.CustomServerParameters.CustomEndpointDetails.SecurityGroupIDSelector,
 			To: reference.To{
@@ -77,6 +79,7 @@ func (mg *Server) ResolveReferences(ctx context.Context, c client.Reader) error 
 		mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 			CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomServerParameters.CustomEndpointDetails.SubnetIDs),
 			Extract:       reference.ExternalName(),
+			Namespace:     mg.GetNamespace(),
 			References:    mg.Spec.ForProvider.CustomServerParameters.CustomEndpointDetails.SubnetIDRefs,
 			Selector:      mg.Spec.ForProvider.CustomServerParameters.CustomEndpointDetails.SubnetIDSelector,
 			To: reference.To{
@@ -95,6 +98,7 @@ func (mg *Server) ResolveReferences(ctx context.Context, c client.Reader) error 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomServerParameters.CustomEndpointDetails.VPCEndpointID),
 			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.CustomServerParameters.CustomEndpointDetails.VPCEndpointIDRef,
 			Selector:     mg.Spec.ForProvider.CustomServerParameters.CustomEndpointDetails.VPCEndpointIDSelector,
 			To: reference.To{
@@ -113,6 +117,7 @@ func (mg *Server) ResolveReferences(ctx context.Context, c client.Reader) error 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomServerParameters.CustomEndpointDetails.VPCID),
 			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.CustomServerParameters.CustomEndpointDetails.VPCIDRef,
 			Selector:     mg.Spec.ForProvider.CustomServerParameters.CustomEndpointDetails.VPCIDSelector,
 			To: reference.To{
@@ -130,6 +135,7 @@ func (mg *Server) ResolveReferences(ctx context.Context, c client.Reader) error 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomServerParameters.Certificate),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomServerParameters.CertificateRef,
 		Selector:     mg.Spec.ForProvider.CustomServerParameters.CertificateSelector,
 		To: reference.To{
@@ -146,6 +152,7 @@ func (mg *Server) ResolveReferences(ctx context.Context, c client.Reader) error 
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomServerParameters.LoggingRole),
 		Extract:      v1beta12.RoleARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomServerParameters.LoggingRoleRef,
 		Selector:     mg.Spec.ForProvider.CustomServerParameters.LoggingRoleSelector,
 		To: reference.To{
@@ -172,6 +179,7 @@ func (mg *User) ResolveReferences(ctx context.Context, c client.Reader) error {
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomUserParameters.ServerID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomUserParameters.ServerIDRef,
 		Selector:     mg.Spec.ForProvider.CustomUserParameters.ServerIDSelector,
 		To: reference.To{
@@ -188,6 +196,7 @@ func (mg *User) ResolveReferences(ctx context.Context, c client.Reader) error {
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomUserParameters.Role),
 		Extract:      v1beta12.RoleARN(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomUserParameters.RoleRef,
 		Selector:     mg.Spec.ForProvider.CustomUserParameters.RoleSelector,
 		To: reference.To{

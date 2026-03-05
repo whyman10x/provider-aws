@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/aws/aws-sdk-go/aws"
-	"github.com/crossplane/crossplane-runtime/pkg/errors"
+	"github.com/crossplane/crossplane-runtime/v2/pkg/errors"
 	"github.com/google/go-cmp/cmp"
 
 	apigwclient "github.com/crossplane-contrib/provider-aws/pkg/clients/apigateway"

@@ -20,7 +20,7 @@ package v1alpha1
 
 import (
 	"context"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -35,6 +35,7 @@ func (mg *APIMapping) ResolveReferences(ctx context.Context, c client.Reader) er
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomAPIMappingParameters.APIID),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomAPIMappingParameters.APIIDRef,
 		Selector:     mg.Spec.ForProvider.CustomAPIMappingParameters.APIIDSelector,
 		To: reference.To{
@@ -51,6 +52,7 @@ func (mg *APIMapping) ResolveReferences(ctx context.Context, c client.Reader) er
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomAPIMappingParameters.Stage),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomAPIMappingParameters.StageRef,
 		Selector:     mg.Spec.ForProvider.CustomAPIMappingParameters.StageSelector,
 		To: reference.To{
@@ -67,6 +69,7 @@ func (mg *APIMapping) ResolveReferences(ctx context.Context, c client.Reader) er
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomAPIMappingParameters.DomainName),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomAPIMappingParameters.DomainNameRef,
 		Selector:     mg.Spec.ForProvider.CustomAPIMappingParameters.DomainNameSelector,
 		To: reference.To{

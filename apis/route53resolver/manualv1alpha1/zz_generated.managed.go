@@ -18,7 +18,7 @@ limitations under the License.
 
 package manualv1alpha1
 
-import xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
+import xpv1 "github.com/crossplane/crossplane-runtime/v2/apis/common/v1"
 
 // GetCondition of this ResolverRuleAssociation.
 func (mg *ResolverRuleAssociation) GetCondition(ct xpv1.ConditionType) xpv1.Condition {
@@ -38,11 +38,6 @@ func (mg *ResolverRuleAssociation) GetManagementPolicies() xpv1.ManagementPolici
 // GetProviderConfigReference of this ResolverRuleAssociation.
 func (mg *ResolverRuleAssociation) GetProviderConfigReference() *xpv1.Reference {
 	return mg.Spec.ProviderConfigReference
-}
-
-// GetPublishConnectionDetailsTo of this ResolverRuleAssociation.
-func (mg *ResolverRuleAssociation) GetPublishConnectionDetailsTo() *xpv1.PublishConnectionDetailsTo {
-	return mg.Spec.PublishConnectionDetailsTo
 }
 
 // GetWriteConnectionSecretToReference of this ResolverRuleAssociation.
@@ -68,11 +63,6 @@ func (mg *ResolverRuleAssociation) SetManagementPolicies(r xpv1.ManagementPolici
 // SetProviderConfigReference of this ResolverRuleAssociation.
 func (mg *ResolverRuleAssociation) SetProviderConfigReference(r *xpv1.Reference) {
 	mg.Spec.ProviderConfigReference = r
-}
-
-// SetPublishConnectionDetailsTo of this ResolverRuleAssociation.
-func (mg *ResolverRuleAssociation) SetPublishConnectionDetailsTo(r *xpv1.PublishConnectionDetailsTo) {
-	mg.Spec.PublishConnectionDetailsTo = r
 }
 
 // SetWriteConnectionSecretToReference of this ResolverRuleAssociation.

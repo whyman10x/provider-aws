@@ -22,7 +22,7 @@ import (
 	"context"
 	v1beta1 "github.com/crossplane-contrib/provider-aws/apis/ec2/v1beta1"
 	v1alpha1 "github.com/crossplane-contrib/provider-aws/apis/kms/v1alpha1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -39,6 +39,7 @@ func (mg *Domain) ResolveReferences(ctx context.Context, c client.Reader) error 
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomDomainParameters.EncryptionAtRestOptions.KMSKeyID),
 			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.CustomDomainParameters.EncryptionAtRestOptions.KMSKeyIDRef,
 			Selector:     mg.Spec.ForProvider.CustomDomainParameters.EncryptionAtRestOptions.KMSKeyIDSelector,
 			To: reference.To{
@@ -57,6 +58,7 @@ func (mg *Domain) ResolveReferences(ctx context.Context, c client.Reader) error 
 		mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 			CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomDomainParameters.VPCOptions.SecurityGroupIDs),
 			Extract:       reference.ExternalName(),
+			Namespace:     mg.GetNamespace(),
 			References:    mg.Spec.ForProvider.CustomDomainParameters.VPCOptions.SecurityGroupIDRefs,
 			Selector:      mg.Spec.ForProvider.CustomDomainParameters.VPCOptions.SecurityGroupIDSelector,
 			To: reference.To{
@@ -75,6 +77,7 @@ func (mg *Domain) ResolveReferences(ctx context.Context, c client.Reader) error 
 		mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 			CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomDomainParameters.VPCOptions.SubnetIDs),
 			Extract:       reference.ExternalName(),
+			Namespace:     mg.GetNamespace(),
 			References:    mg.Spec.ForProvider.CustomDomainParameters.VPCOptions.SubnetIDRefs,
 			Selector:      mg.Spec.ForProvider.CustomDomainParameters.VPCOptions.SubnetIDSelector,
 			To: reference.To{

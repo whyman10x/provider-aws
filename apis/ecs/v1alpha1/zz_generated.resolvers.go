@@ -24,7 +24,7 @@ import (
 	v1alpha11 "github.com/crossplane-contrib/provider-aws/apis/efs/v1alpha1"
 	v1alpha1 "github.com/crossplane-contrib/provider-aws/apis/elbv2/v1alpha1"
 	v1beta11 "github.com/crossplane-contrib/provider-aws/apis/iam/v1beta1"
-	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	reference "github.com/crossplane/crossplane-runtime/v2/pkg/reference"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -40,6 +40,7 @@ func (mg *Service) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomServiceParameters.Cluster),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomServiceParameters.ClusterRef,
 		Selector:     mg.Spec.ForProvider.CustomServiceParameters.ClusterSelector,
 		To: reference.To{
@@ -57,6 +58,7 @@ func (mg *Service) ResolveReferences(ctx context.Context, c client.Reader) error
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomServiceParameters.LoadBalancers[i4].LoadBalancerName),
 			Extract:      LoadBalancerName(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.CustomServiceParameters.LoadBalancers[i4].LoadBalancerNameRef,
 			Selector:     mg.Spec.ForProvider.CustomServiceParameters.LoadBalancers[i4].LoadBalancerNameSelector,
 			To: reference.To{
@@ -75,6 +77,7 @@ func (mg *Service) ResolveReferences(ctx context.Context, c client.Reader) error
 		rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 			CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomServiceParameters.LoadBalancers[i4].TargetGroupARN),
 			Extract:      reference.ExternalName(),
+			Namespace:    mg.GetNamespace(),
 			Reference:    mg.Spec.ForProvider.CustomServiceParameters.LoadBalancers[i4].TargetGroupARNRef,
 			Selector:     mg.Spec.ForProvider.CustomServiceParameters.LoadBalancers[i4].TargetGroupARNSelector,
 			To: reference.To{
@@ -94,6 +97,7 @@ func (mg *Service) ResolveReferences(ctx context.Context, c client.Reader) error
 			mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 				CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomServiceParameters.NetworkConfiguration.AWSvpcConfiguration.SecurityGroups),
 				Extract:       reference.ExternalName(),
+				Namespace:     mg.GetNamespace(),
 				References:    mg.Spec.ForProvider.CustomServiceParameters.NetworkConfiguration.AWSvpcConfiguration.SecurityGroupRefs,
 				Selector:      mg.Spec.ForProvider.CustomServiceParameters.NetworkConfiguration.AWSvpcConfiguration.SecurityGroupSelector,
 				To: reference.To{
@@ -114,6 +118,7 @@ func (mg *Service) ResolveReferences(ctx context.Context, c client.Reader) error
 			mrsp, err = r.ResolveMultiple(ctx, reference.MultiResolutionRequest{
 				CurrentValues: reference.FromPtrValues(mg.Spec.ForProvider.CustomServiceParameters.NetworkConfiguration.AWSvpcConfiguration.Subnets),
 				Extract:       reference.ExternalName(),
+				Namespace:     mg.GetNamespace(),
 				References:    mg.Spec.ForProvider.CustomServiceParameters.NetworkConfiguration.AWSvpcConfiguration.SubnetRefs,
 				Selector:      mg.Spec.ForProvider.CustomServiceParameters.NetworkConfiguration.AWSvpcConfiguration.SubnetSelector,
 				To: reference.To{
@@ -132,6 +137,7 @@ func (mg *Service) ResolveReferences(ctx context.Context, c client.Reader) error
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomServiceParameters.TaskDefinition),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomServiceParameters.TaskDefinitionRef,
 		Selector:     mg.Spec.ForProvider.CustomServiceParameters.TaskDefinitionSelector,
 		To: reference.To{
@@ -158,6 +164,7 @@ func (mg *TaskDefinition) ResolveReferences(ctx context.Context, c client.Reader
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomTaskDefinitionParameters.ExecutionRoleARN),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomTaskDefinitionParameters.ExecutionRoleARNRef,
 		Selector:     mg.Spec.ForProvider.CustomTaskDefinitionParameters.ExecutionRoleARNSelector,
 		To: reference.To{
@@ -174,6 +181,7 @@ func (mg *TaskDefinition) ResolveReferences(ctx context.Context, c client.Reader
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomTaskDefinitionParameters.TaskRoleARN),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomTaskDefinitionParameters.TaskRoleARNRef,
 		Selector:     mg.Spec.ForProvider.CustomTaskDefinitionParameters.TaskRoleARNSelector,
 		To: reference.To{
@@ -193,6 +201,7 @@ func (mg *TaskDefinition) ResolveReferences(ctx context.Context, c client.Reader
 				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomTaskDefinitionParameters.Volumes[i4].EFSVolumeConfiguration.AuthorizationConfig.AccessPointID),
 					Extract:      reference.ExternalName(),
+					Namespace:    mg.GetNamespace(),
 					Reference:    mg.Spec.ForProvider.CustomTaskDefinitionParameters.Volumes[i4].EFSVolumeConfiguration.AuthorizationConfig.AccessPointIDRef,
 					Selector:     mg.Spec.ForProvider.CustomTaskDefinitionParameters.Volumes[i4].EFSVolumeConfiguration.AuthorizationConfig.AccessPointIDSelector,
 					To: reference.To{
@@ -214,6 +223,7 @@ func (mg *TaskDefinition) ResolveReferences(ctx context.Context, c client.Reader
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomTaskDefinitionParameters.Volumes[i4].EFSVolumeConfiguration.FileSystemID),
 				Extract:      reference.ExternalName(),
+				Namespace:    mg.GetNamespace(),
 				Reference:    mg.Spec.ForProvider.CustomTaskDefinitionParameters.Volumes[i4].EFSVolumeConfiguration.FileSystemIDRef,
 				Selector:     mg.Spec.ForProvider.CustomTaskDefinitionParameters.Volumes[i4].EFSVolumeConfiguration.FileSystemIDSelector,
 				To: reference.To{
@@ -243,6 +253,7 @@ func (mg *TaskDefinitionFamily) ResolveReferences(ctx context.Context, c client.
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomTaskDefinitionParameters.ExecutionRoleARN),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomTaskDefinitionParameters.ExecutionRoleARNRef,
 		Selector:     mg.Spec.ForProvider.CustomTaskDefinitionParameters.ExecutionRoleARNSelector,
 		To: reference.To{
@@ -259,6 +270,7 @@ func (mg *TaskDefinitionFamily) ResolveReferences(ctx context.Context, c client.
 	rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 		CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomTaskDefinitionParameters.TaskRoleARN),
 		Extract:      reference.ExternalName(),
+		Namespace:    mg.GetNamespace(),
 		Reference:    mg.Spec.ForProvider.CustomTaskDefinitionParameters.TaskRoleARNRef,
 		Selector:     mg.Spec.ForProvider.CustomTaskDefinitionParameters.TaskRoleARNSelector,
 		To: reference.To{
@@ -278,6 +290,7 @@ func (mg *TaskDefinitionFamily) ResolveReferences(ctx context.Context, c client.
 				rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 					CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomTaskDefinitionParameters.Volumes[i4].EFSVolumeConfiguration.AuthorizationConfig.AccessPointID),
 					Extract:      reference.ExternalName(),
+					Namespace:    mg.GetNamespace(),
 					Reference:    mg.Spec.ForProvider.CustomTaskDefinitionParameters.Volumes[i4].EFSVolumeConfiguration.AuthorizationConfig.AccessPointIDRef,
 					Selector:     mg.Spec.ForProvider.CustomTaskDefinitionParameters.Volumes[i4].EFSVolumeConfiguration.AuthorizationConfig.AccessPointIDSelector,
 					To: reference.To{
@@ -299,6 +312,7 @@ func (mg *TaskDefinitionFamily) ResolveReferences(ctx context.Context, c client.
 			rsp, err = r.Resolve(ctx, reference.ResolutionRequest{
 				CurrentValue: reference.FromPtrValue(mg.Spec.ForProvider.CustomTaskDefinitionParameters.Volumes[i4].EFSVolumeConfiguration.FileSystemID),
 				Extract:      reference.ExternalName(),
+				Namespace:    mg.GetNamespace(),
 				Reference:    mg.Spec.ForProvider.CustomTaskDefinitionParameters.Volumes[i4].EFSVolumeConfiguration.FileSystemIDRef,
 				Selector:     mg.Spec.ForProvider.CustomTaskDefinitionParameters.Volumes[i4].EFSVolumeConfiguration.FileSystemIDSelector,
 				To: reference.To{
