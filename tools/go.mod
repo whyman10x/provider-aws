@@ -1,8 +1,8 @@
 module github.com/crossplane-contrib/provider-aws/tools
 
-go 1.23.0
+go 1.25.0
 
-toolchain go1.24.3
+toolchain go1.25.0
 
 require (
 	github.com/aws-controllers-k8s/code-generator v0.26.1
